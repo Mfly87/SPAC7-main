@@ -1,20 +1,11 @@
 from .abs_faker import AbsFaker
 
 class FakeProduct(AbsFaker):
-    def __init__(self) -> None:
-        super().__init__()
+    @property
+    def id_tag(self):
+        return "Prod"
     
-    def headers(self):
-        return [
-            "ID",
-            "Name",
-            "Description",
-            "Catagory",
-            "Price",
-            "Quantity"
-        ]
-
-    def generate_entry_line(self):
+    def generate_fake_item(self):
         _entry = ["Prod-" + str(self._product_id).zfill(6)]
         self._product_id += 1
 

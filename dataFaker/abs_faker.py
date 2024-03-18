@@ -10,33 +10,17 @@ class AbsFaker(abc.ABC):
         Faker.seed(seed)
 
     @abc.abstractproperty
-    def headers(self):
+    def id_tag(self):
         pass
+
+    def get_next_id(self) -> str:
+        _id = self.id_tag + str(self._product_id).zfill(6)
+        self._product_id += 1
+        return _id
 
     @abc.abstractclassmethod
-    def generate_entry_line(self):
+    def generate_fake_item(self):
         pass
-
-    @property
-    def fake_category_names(self):
-        return [
-            "Refrigerator",
-            "Oven",
-            "Air fryer",
-            "Microwave",
-            "Dishwasher",
-            "Washing machine",
-            "Dryer",
-            "Vacuum cleaner",
-            "Air conditioner",
-            "Heater",
-            "Iron",
-            "Blender",
-            "Toaster",
-            "Coffee maker",
-            "Kettle",
-            "Electric fan"
-        ]
     
     def create_float(self, min :float, max: float) -> int:
         '''min and max are inclusive'''
@@ -66,9 +50,6 @@ class AbsFaker(abc.ABC):
     def create_last_name(self):
         return self._faker.last_name()
 
-    def create_category(self):        
-        return self._get_rand_item(self.fake_category_names)
-    
     def _get_rand_item(self, item_list : list):
         _index = self.create_int(0, len(item_list) - 1)
         return item_list[_index]
