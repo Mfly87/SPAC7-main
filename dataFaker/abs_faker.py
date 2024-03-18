@@ -14,7 +14,7 @@ class AbsFaker(abc.ABC):
         pass
 
     def get_next_id(self) -> str:
-        _id = self.id_tag + str(self._product_id).zfill(6)
+        _id = self.id_tag + "-" + str(self._product_id).zfill(6)
         self._product_id += 1
         return _id
 
@@ -22,34 +22,34 @@ class AbsFaker(abc.ABC):
     def generate_fake_item(self):
         pass
     
-    def create_float(self, min :float, max: float) -> int:
+    def _create_float(self, min :float, max: float) -> int:
         '''min and max are inclusive'''
         return self._faker.pyfloat(min_value = min, max_value = max)
     
-    def create_int(self, min :int, max: int) -> int:
+    def _create_int(self, min :int, max: int) -> int:
         '''min and max are inclusive'''
         return self._faker.pyint(min_value = min, max_value = max)
 
-    def create_sentence(self):
+    def _create_sentence(self):
         return self._faker.paragraph(nb_sentences=1)
     
-    def create_transaction_type(self):        
+    def _create_transaction_type(self):        
         _transaction = ["Buy", "Sell"] #Return?
         return self._get_rand_item(_transaction)
     
-    def create_date(self) -> datetime:
+    def _create_date(self) -> datetime:
         return self._faker.date_between(start_date = "-5y")
 
-    def create_awesomizer(self):
+    def _create_awesomizer(self):
         _options = []
         _options.append( str(self._faker.century()) )
-        _options.append( str(self.create_int(0,9) * 100) )
-        _options.append( str(self.create_int(1950,2024)) )
+        _options.append( str(self._create_int(0,9) * 100) )
+        _options.append( str(self._create_int(1950,2024)) )
         return self._get_rand_item(_options)
 
-    def create_last_name(self):
+    def _create_last_name(self):
         return self._faker.last_name()
 
     def _get_rand_item(self, item_list : list):
-        _index = self.create_int(0, len(item_list) - 1)
+        _index = self._create_int(0, len(item_list) - 1)
         return item_list[_index]

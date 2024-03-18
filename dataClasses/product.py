@@ -27,9 +27,18 @@ class Product():
     
     @property
     def price(self) -> float:
-        return self.price
+        return self._price
     
     @property
     def quantity(self) -> int:
         return self._quantity
-
+    
+    def to_string(self):
+        return " | ".join([
+            self.id,
+            self.name,
+            self.description,
+            self.category.name,
+            str(self.price),
+            str(self.quantity)
+        ])

@@ -1,8 +1,9 @@
-from faker import Faker
+from dataFaker import FakeCategory
+from dataFaker import FakeProduct
+from dataClasses import Product
 
-from dataFaker.fake_product import FakeProduct
-
-a = FakeProduct()
-
+_category_list = FakeCategory().generate_fake_item_list()
+_product_factory = FakeProduct()
 for _ in range(100):
-    print(a.generate_fake_item())
+    _product = _product_factory.generate_fake_item_from_category_list(_category_list)
+    print(_product.to_string())

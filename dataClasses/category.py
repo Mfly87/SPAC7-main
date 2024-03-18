@@ -15,3 +15,10 @@ class Category():
     @property
     def description(self) -> str:
         return self._description
+    
+    def to_string(self):
+        return " | ".join([
+            self.id,
+            self.name,
+            self.description,
+        ])

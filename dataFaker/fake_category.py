@@ -3,6 +3,9 @@ from dataClasses import Category
 from dataClasses import DataClassFactory
 
 class FakeCategory(AbsFaker):
+    @property
+    def id_tag(self):
+        return "Cat"
 
     @property
     def fake_category_names(self):
@@ -37,5 +40,5 @@ class FakeCategory(AbsFaker):
         return _factory.create_category(
             self.get_next_id(),
             category_name,
-            self.create_sentence()
+            self._create_sentence()
         )
