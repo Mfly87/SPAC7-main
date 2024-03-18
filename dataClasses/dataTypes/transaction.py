@@ -1,17 +1,16 @@
+from ..absDataTypes import UniqueData
+
 from datetime import datetime
 from .product import Product
 
-class Transaction():
+class Transaction(UniqueData):
     def __init__(self, id : str, product : Product, date : datetime, quantity : int, type : str) -> None:
-        self._id : str = id
+        super().__init__(id)
+        
         self._product : Product = product
         self._date : datetime = date
         self._quantity : int = quantity
         self._type : str = type
-
-    @property
-    def id(self) -> str:
-        return self._id
     
     @property
     def product(self) -> Product:
@@ -29,11 +28,15 @@ class Transaction():
     def type(self) -> str:
         return self._type
     
+    @property
+    def timestamp(self):
+        return str(self.date)
+
     def to_string(self):
         return " | ".join([
             self.id,
             self.product.id,
-            self.date,
-            str(self.quantity),
+            self.timestamp,
+            "Qty: " + str(self.quantity),
             self.type,
         ])
