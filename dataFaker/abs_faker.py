@@ -1,5 +1,6 @@
 import abc
 
+
 class AbsFaker(abc.ABC):
     _product_id : int
 
