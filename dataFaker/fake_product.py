@@ -15,10 +15,10 @@ class FakeProduct(AbsFaker):
         ]
 
     def generate_entry_line(self):
-        _entry = [str(self._product_id)]
+        _entry = ["Prod-" + str(self._product_id).zfill(6)]
         self._product_id += 1
 
-        _catagory = self.create_catagory()
+        _catagory = self.create_category()
 
         _entry.append(self.generate_product_name(_catagory))
         _entry.append(self.create_sentence())

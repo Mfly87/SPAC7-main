@@ -17,6 +17,27 @@ class AbsFaker(abc.ABC):
     def generate_entry_line(self):
         pass
 
+    @property
+    def fake_category_names(self):
+        return [
+            "Refrigerator",
+            "Oven",
+            "Air fryer",
+            "Microwave",
+            "Dishwasher",
+            "Washing machine",
+            "Dryer",
+            "Vacuum cleaner",
+            "Air conditioner",
+            "Heater",
+            "Iron",
+            "Blender",
+            "Toaster",
+            "Coffee maker",
+            "Kettle",
+            "Electric fan"
+        ]
+    
     def create_float(self, min :float, max: float) -> int:
         '''min and max are inclusive'''
         return self._faker.pyfloat(min_value = min, max_value = max)
@@ -39,32 +60,14 @@ class AbsFaker(abc.ABC):
         _options = []
         _options.append( str(self._faker.century()) )
         _options.append( str(self.create_int(0,9) * 100) )
-        _options.append( str(self.create_int(1850,2024)) )
+        _options.append( str(self.create_int(1950,2024)) )
         return self._get_rand_item(_options)
 
     def create_last_name(self):
         return self._faker.last_name()
 
-    def create_catagory(self):        
-        _catagories = [
-            "Refrigerator",
-            "Oven",
-            "Air fryer",
-            "Microwave",
-            "Dishwasher",
-            "Washing machine",
-            "Dryer",
-            "Vacuum cleaner",
-            "Air conditioner",
-            "Heater",
-            "Iron",
-            "Blender",
-            "Toaster",
-            "Coffee maker",
-            "Kettle",
-            "Electric fan"
-        ]
-        return self._get_rand_item(_catagories)
+    def create_category(self):        
+        return self._get_rand_item(self.fake_category_names)
     
     def _get_rand_item(self, item_list : list):
         _index = self.create_int(0, len(item_list) - 1)
