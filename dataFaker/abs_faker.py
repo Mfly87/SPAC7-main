@@ -6,7 +6,7 @@ class AbsFaker(abc.ABC):
         self._product_id : int = 0
         self._faker : Faker = Faker()
 
-    def set_seed(seed : int):
+    def set_seed(self, seed : int):
         Faker.seed(seed)
 
     @abc.abstractproperty
