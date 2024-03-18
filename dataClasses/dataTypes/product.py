@@ -27,6 +27,6 @@ class Product(UniqueNamedData):
             self.name,
             self.description,
             self.category.name,
-            str(self.price),
-            str(self.quantity)
+            str(self.price) + ",-kr.",
+            "Qty: " + str(self.quantity)
         ])

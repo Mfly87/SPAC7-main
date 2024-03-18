@@ -8,7 +8,7 @@ class UniqueData(abc.ABC):
 
     @property
     def id(self):
-        self.id
+        return self._id
 
     @abc.abstractclassmethod
     def to_string(self):
