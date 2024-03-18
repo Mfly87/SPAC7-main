@@ -1,5 +1,5 @@
 from .abs_faker import AbsFaker
-from dataClasses import Category
+from dataClasses.dataTypes import Category
 from dataClasses import DataClassFactory
 
 class FakeCategory(AbsFaker):

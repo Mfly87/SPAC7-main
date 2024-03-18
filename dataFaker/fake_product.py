@@ -1,8 +1,8 @@
 from .abs_faker import AbsFaker
 
 from dataClasses import DataClassFactory
-from dataClasses import Category
-from dataClasses import Product
+from dataClasses.dataTypes import Category
+from dataClasses.dataTypes import Product
 
 class FakeProduct(AbsFaker):
     @property

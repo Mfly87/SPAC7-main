@@ -1,6 +1,6 @@
 from dataFaker import FakeCategory
 from dataFaker import FakeProduct
-from dataClasses import Product
+from dataClasses.dataTypes import Product
 
 _category_list = FakeCategory().generate_fake_item_list()
 _product_factory = FakeProduct()
