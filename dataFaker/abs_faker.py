@@ -2,8 +2,9 @@ import abc
 from faker import Faker
 from datetime import datetime
 class AbsFaker(abc.ABC):
-    _product_id : int
-    _faker : Faker = Faker()
+    def __init__(self) -> None:
+        self._product_id : int = 0
+        self._faker : Faker = Faker()
 
     def set_seed(seed : int):
         Faker.seed(seed)
@@ -25,7 +26,7 @@ class AbsFaker(abc.ABC):
         return self._faker.pyint(min_value = min, max_value = max)
 
     def create_sentence(self):
-        return self._faker.paragraph(nb_sentences=5)
+        return self._faker.paragraph(nb_sentences=1)
     
     def create_transaction_type(self):        
         _transaction = ["Buy", "Sell"] #Return?

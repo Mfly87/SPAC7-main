@@ -1,8 +1,8 @@
 from faker import Faker
 
-from dataFaker.abs_faker import AbsFaker
+from dataFaker.fake_product import FakeProduct
 
-a = AbsFaker()
+a = FakeProduct()
 
 for _ in range(100):
-    print(a.create_last_name())
+    print(a.generate_entry_line())
