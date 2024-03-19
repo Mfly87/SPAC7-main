@@ -11,7 +11,7 @@ class UserChoiceSelector():
             _name_list.append(_name)
         
         _index = self.get_user_choice_from_name_list(_name_list)
-        _offset = 0 if null_choice else 1
+        _offset = 1 if null_choice else 0
         return _index -_offset
 
 
@@ -20,6 +20,7 @@ class UserChoiceSelector():
     def get_user_choice_from_name_list(self, choice_name_list : list[str]) -> int:
         _index = self._get_choice_index(choice_name_list)
         print("You have selected: (" + str(_index) + ") " + choice_name_list[_index])
+        print("")
         return _index
 
 
@@ -45,7 +46,7 @@ class UserChoiceSelector():
                 if 0 <= _value and _value < len(choice_name_list):
                     return _value
                 
-                print("Please try again.")
+                print("Invalid selection.")
 
 
     def _attempt_to_get_an_int(self, _input : str):
