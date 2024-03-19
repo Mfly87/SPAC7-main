@@ -43,6 +43,6 @@ for _data in _data_list:
         _data._quantity += 100
     _wh.update_item(_data)
 
-_data_list = _wh.search_item("Coffee maker")
+_data_list = _wh.search_item("Tran-00005")
 for _data in _data_list:
-    print(_data.to_string())
+    print(_data.to_dict())

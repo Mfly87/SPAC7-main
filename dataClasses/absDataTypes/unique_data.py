@@ -9,9 +9,13 @@ class UniqueData(abc.ABC):
     @property
     def id(self) -> str:
         return self._id
-
+    
     @abc.abstractclassmethod
     def to_string(self) -> str:
+        pass
+
+    @abc.abstractclassmethod
+    def to_dict(self) -> dict[str,str]:
         pass
 
     def matches_search(self, search_string : str) -> bool:

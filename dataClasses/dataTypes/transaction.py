@@ -32,6 +32,16 @@ class Transaction(UniqueData):
     def timestamp(self):
         return str(self.date)
 
+    def to_dict(self) -> dict[str,str]:
+        return {
+            "class": type(self).__name__,
+            "id": self.id,
+            "product_id": self.product.id,
+            "timestamp": self.timestamp,
+            "type": self.type,
+            "quantity": str(self.quantity),
+        }
+
     def to_string(self) -> str:
         return " | ".join([
             self.id,

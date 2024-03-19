@@ -21,6 +21,17 @@ class Product(UniqueNamedData):
     def quantity(self) -> int:
         return self._quantity
     
+    def to_dict(self) -> dict[str,str]:
+        return {
+            "class": type(self).__name__,
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "category_id": self.category.id,
+            "price": str(self.price),
+            "quantity": str(self.quantity),
+        }
+    
     def to_string(self) -> str:
         return " | ".join([
             self.id,
