@@ -5,7 +5,7 @@ from dataClasses import DataClassFactory
 class FakeCategory(AbsFaker):
     @property
     def id_tag(self):
-        return "Cat"
+        return "Cate"
 
     @property
     def fake_category_names(self):

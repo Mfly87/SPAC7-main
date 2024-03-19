@@ -1,33 +1,30 @@
-from typing import TypeVar, Generic, Callable, TypeAlias
 from .abs_warehouse import AbsWarehouse
+from dataClasses.absDataTypes import UniqueData
 
-T = TypeVar("T")
+class WarehouseOOP(AbsWarehouse):
+    _storage : dict[str, UniqueData] = dict()
 
-class WarehouseOOP(AbsWarehouse, Generic[T]):
-    _storage : dict[str,T] = dict()
+    @property
+    def item_count(self):
+        return len(self._storage.keys())
 
-    def __init__(self, get_id_func: Callable[[T],str], search_func: Callable[[T,str],bool]) -> None:
-        self._get_id_func = get_id_func
-        self._search_func = search_func
-
-    def search_item(self, search_string : str) -> list[T]:
-        _item_list: list[T] = []
+    def search_item(self, search_string : str) -> list[UniqueData]:
+        _item_list: list[UniqueData] = []
         for _item in self._storage.values():
-            if self._search_func(_item, search_string):
+            if _item.matches_search(search_string):
                 _item_list.append(_item)
         return _item_list
 
-    def get_items(self, id_list : list[str]) -> list[T]:
-        _item_list = []
+    def get_items(self, id_list : list[str]) -> list[UniqueData]:
+        _item_list: UniqueData = []
         for _id in id_list:
             if _id in self._storage:
-                _item_list.append(self._storage[_id])
+                _item = self._storage[_id]
+                _item_list.append(_item)
         return _item_list
 
-    def update_item(self, item : T) -> None:
-        _id = self._get_id_func(item)
-        self._storage |= {_id: item}
+    def update_item(self, item : UniqueData) -> None:
+        self._storage |= {item.id: item}
 
-    def delete_item(self, item : T) -> None:
-        _id = self._get_id_func(item)
-        del self._storage[_id]
+    def delete_item(self, item : UniqueData) -> None:
+        del self._storage[item.id]

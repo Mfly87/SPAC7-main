@@ -10,6 +10,10 @@ class FakeTransaction(AbsFaker):
     def id_tag(self):
         return "Tran"
     
+    def generate_fake_item_from_product_list(self, product_list : list[Product]) -> Transaction:
+        _product : Product = self._get_rand_item(product_list)
+        return self.generate_fake_item(_product)
+    
     def generate_fake_item(self, product : Product) -> Transaction:
         _factory = DataClassFactory()
         
