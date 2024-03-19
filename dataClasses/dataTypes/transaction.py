@@ -32,7 +32,7 @@ class Transaction(UniqueData):
     def timestamp(self):
         return str(self.date)
 
-    def to_string(self):
+    def to_string(self) -> str:
         return " | ".join([
             self.id,
             self.product.id,

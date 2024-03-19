@@ -7,7 +7,7 @@ class AbsWarehouse(abc.ABC):
         pass
 
     @abc.abstractclassmethod
-    def get_item(self):
+    def get_items(self):
         pass
 
     @abc.abstractclassmethod

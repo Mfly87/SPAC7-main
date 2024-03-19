@@ -15,3 +15,11 @@ class UniqueNamedData(UniqueData):
     def description(self) -> str:
         return self._description
 
+    def matches_search(self, search_string : str) -> bool:
+        if super().matches_search(search_string):
+            return True
+        if (search_string in self.name):
+            return True
+        if (search_string in self.description):
+            return True
+        return False

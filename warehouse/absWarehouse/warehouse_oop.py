@@ -1,9 +1,9 @@
-from typing import TypeVar, Generic, Callable
+from typing import TypeVar, Generic, Callable, TypeAlias
 from .abs_warehouse import AbsWarehouse
 
 T = TypeVar("T")
 
-class WarehouseOOP(AbsWarehouse, Generic(T)):
+class WarehouseOOP(AbsWarehouse, Generic[T]):
     _storage : dict[str,T] = dict()
 
     def __init__(self, get_id_func: Callable[[T],str], search_func: Callable[[T,str],bool]) -> None:
@@ -17,10 +17,12 @@ class WarehouseOOP(AbsWarehouse, Generic(T)):
                 _item_list.append(_item)
         return _item_list
 
-    def get_item(self, id : str) -> list[T]:
-        if id not in self._storage:
-            return []
-        return [self._storage[id]]
+    def get_items(self, id_list : list[str]) -> list[T]:
+        _item_list = []
+        for _id in id_list:
+            if _id in self._storage:
+                _item_list.append(self._storage[_id])
+        return _item_list
 
     def update_item(self, item : T) -> None:
         _id = self._get_id_func(item)

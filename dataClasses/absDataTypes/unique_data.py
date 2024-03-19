@@ -7,9 +7,14 @@ class UniqueData(abc.ABC):
         self._id = id
 
     @property
-    def id(self):
+    def id(self) -> str:
         return self._id
 
     @abc.abstractclassmethod
-    def to_string(self):
+    def to_string(self) -> str:
         pass
+
+    def matches_search(self, search_string : str) -> bool:
+        if (search_string in self.id):
+            return True
+        return False

@@ -21,7 +21,7 @@ class Product(UniqueNamedData):
     def quantity(self) -> int:
         return self._quantity
     
-    def to_string(self):
+    def to_string(self) -> str:
         return " | ".join([
             self.id,
             self.name,
