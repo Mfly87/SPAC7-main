@@ -1,6 +1,6 @@
 from .abs_faker import AbsFaker
 
-from dataClasses import DataClassFactory
+from dataClasses.factory import DataClassFactory
 from dataClasses.dataTypes import Category
 from dataClasses.dataTypes import Product
 
@@ -9,11 +9,11 @@ class FakeProduct(AbsFaker):
     def id_tag(self):
         return "Prod"
     
-    def generate_fake_item_from_category_list(self, category_list : list[Category]) -> Product:
+    def generate_fake_item_from_category_list(self, category_list : list[Category]) -> list[Product]:
         _category : Category = self._get_rand_item(category_list)
         return self.generate_fake_item(_category)
 
-    def generate_fake_item(self, catagory : Category) -> Product:
+    def generate_fake_item(self, catagory : Category) -> list[Product]:
         _price = self._create_int(6,60)*50 - 1
         _quantity = self._create_int(0,50)
 
@@ -22,7 +22,7 @@ class FakeProduct(AbsFaker):
             self.get_next_id(),
             self._generate_product_name(catagory.name),
             self._create_sentence(),
-            catagory,
+            catagory.id,
             _price,
             _quantity
         )

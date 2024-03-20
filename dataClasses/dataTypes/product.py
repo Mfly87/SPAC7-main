@@ -2,31 +2,61 @@ from ..absDataTypes import UniqueNamedData
 from .category import Category
 
 class Product(UniqueNamedData):
-    def __init__(self, id : str, name : str, description : str, category : Category, price : float, quantity : int) -> None:
+    _price : int = 0
+    _quantity : int = 0
+
+    def __init__(self, id : str, name : str, description : str, category_id : str, price : int, quantity : int) -> None:
         super().__init__(id, name, description)
 
-        self._category : Category = category
-        self._price : float = price
-        self._quantity : int = quantity
+        self._category_id : str = category_id
+        self.change_price(price)
+        self.change_quantity(quantity)
     
     @property
-    def category(self) -> Category:
-        return self._category
+    def category_id(self) -> int:
+        return self._category_id
     
     @property
-    def price(self) -> float:
+    def price(self) -> int:
         return self._price
     
     @property
     def quantity(self) -> int:
         return self._quantity
+
+    def change_price(self, price : str | int) -> None:
+        _price = self._convert_to_int_or_none(price)
+        if _price is None:
+            return    
+        if _price < 0:
+            return
+        self._price = _price
     
-    def to_string(self):
+    def change_quantity(self, quantity : str | int) -> None:
+        _quantity = self._convert_to_int_or_none(quantity)
+        if _quantity is None:
+            return
+        if _quantity < 0:
+            return
+        self._quantity = _quantity
+
+    def to_dict(self) -> dict[str,str]:
+        return {
+            "class": type(self).__name__,
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "category_id": self.category_id,
+            "price": str(self.price),
+            "quantity": str(self.quantity),
+        }
+    
+    def to_string(self) -> str:
         return " | ".join([
             self.id,
             self.name,
             self.description,
-            self.category.name,
+            self.category_id,
             str(self.price) + ",-kr.",
             "Qty: " + str(self.quantity)
-        ])
+        ])  
