@@ -19,11 +19,7 @@ class AbsFactory(abc.ABC):
         return [ud]
     
     @abc.abstractclassmethod
-    def create_from_dict(self, ud_dict : dict[str,str]) -> list[UniqueData]:
-        ...
-
-    @abc.abstractclassmethod
-    def create_from_params(self) -> list[UniqueData]:
+    def create(self) -> list[UniqueData]:
         ...
 
         

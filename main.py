@@ -3,7 +3,7 @@ from userInterface.user_interaction import UserInteraction
 from warehouse import WarehouseOOP
 
 
-from dataClasses.factory import FactoryCategory
+from dataClasses.factory import DataClassFactory
 
 
 from dataFaker import FakeCategory
@@ -12,42 +12,43 @@ from dataFaker import FakeTransaction
 
 _wh = WarehouseOOP()
 
-_product_factory = FakeProduct()
-_category_factory = FakeCategory()
-_transaction_factory = FakeTransaction()
-_product_factory.set_seed(0)
+_product_faker = FakeProduct()
+_category_faker = FakeCategory()
+_transaction_faker = FakeTransaction()
+_product_faker.set_seed(0)
 
-_category_list = _category_factory.generate_fake_item_list()
+_category_list = _category_faker.generate_fake_item_list()
 for _category in _category_list:
     _wh.update_item(_category)
 
-_product_list = []
+_product_list : list[Product] = []
 for _ in range(100):
-    _product = _product_factory.generate_fake_item_from_category_list(_category_list)
-    _product_list.append(_product)
-    _wh.update_item(_product)
+    for _product in _product_faker.generate_fake_item_from_category_list(_category_list):
+        _product_list.append(_product)
+        _wh.update_item(_product)
 
 for _ in range(100):
-    _transaction = _transaction_factory.generate_fake_item_from_product_list(_product_list)
-    _wh.update_item(_transaction)
+    for _transaction in _transaction_faker.generate_fake_item_from_product_list(_product_list):
+        _wh.update_item(_transaction)
 
 print(str(_wh.item_count) + " items in warehouse")
 #user_interaction = UserInteraction()
 #user_interaction.start_interation()
 
-#_data_list = _wh.get_items(["Prod-000050"])
-_data_list = _wh.search_item("Coffee maker")
-for _data in _data_list:
-    if not isinstance(_data, Product):
-        continue
-    _price = _data.price
-    while _price < 5000:
-        _price *= 2
-        _data._quantity += 100
-    _wh.update_item(_data)
 
-_data_list = _wh.search_item("010")
-for _data in _data_list:
-    print(_data.to_dict())
+_p0 = _wh.get_items(["Prod-000000"])[0]
+_d0 = _p0.to_dict()
+print(_d0)
 
+_d0 |= {"price": "42"}
 
+_factory = DataClassFactory()
+_p1 = _factory.create_product(**_d0)[0]
+
+print(_p0.to_string())
+print(_p1.to_string())
+
+_wh.update_item(_p1)
+
+_p2 = _wh.get_items(["Prod-000000"])[0]
+print(_p2.to_string())

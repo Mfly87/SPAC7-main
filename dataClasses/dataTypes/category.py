@@ -9,7 +9,7 @@ class Category(UniqueNamedData):
             "class": type(self).__name__,
             "id": self.id,
             "name": self.name,
-            "description": self.description
+            "description": self.description,
         }
 
     def to_string(self) -> str:
