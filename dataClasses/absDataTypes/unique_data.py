@@ -1,12 +1,12 @@
 import abc
-
+import re
 from datetime import datetime
 
 class UniqueData(abc.ABC):
     def __init__(self, id : str) -> None:
         super().__init__()
-        self._id = id
-    
+        self._id = str(id).strip().lower()
+
     @property
     def date_format(self) -> str:
         return "%Y-%m-%d"
@@ -24,7 +24,10 @@ class UniqueData(abc.ABC):
         pass
 
     def matches_search(self, search_string : str) -> bool:
-        if (search_string in self.id):
+        print(search_string)
+        print(self.id)
+        print(re.search(search_string, self.id, re.IGNORECASE))
+        if re.search(search_string, self.id, re.IGNORECASE):
             return True
         return False
         

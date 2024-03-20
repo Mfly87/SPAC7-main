@@ -1,5 +1,7 @@
 from .unique_data import UniqueData
 
+import re
+
 class UniqueNamedData(UniqueData):
     def __init__(self, id: str, name : str, description : str) -> None:
         super().__init__(id)
@@ -24,8 +26,8 @@ class UniqueNamedData(UniqueData):
     def matches_search(self, search_string : str) -> bool:
         if super().matches_search(search_string):
             return True
-        if (search_string in self.name):
+        if re.search(search_string, self.name, re.IGNORECASE):
             return True
-        if (search_string in self.description):
+        if re.search(search_string, self.description, re.IGNORECASE):
             return True
         return False

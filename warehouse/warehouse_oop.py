@@ -17,7 +17,8 @@ class WarehouseOOP(AbsWarehouse):
 
     def get_items(self, id_list : list[str]) -> list[UniqueData]:
         _item_list: UniqueData = []
-        for _id in id_list:
+        for _raw_id in id_list:
+            _id = str(_raw_id).strip().lower()
             if _id in self._storage:
                 _item = self._storage[_id]
                 _item_list.append(_item)

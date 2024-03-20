@@ -13,25 +13,25 @@ class Product(UniqueNamedData):
         self.change_quantity(quantity)
     
     @property
-    def category_id(self) -> str:
+    def category_id(self) -> int:
         return self._category_id
     
     @property
-    def price(self) -> str:
+    def price(self) -> int:
         return self._price
     
     @property
-    def quantity(self) -> str:
+    def quantity(self) -> int:
         return self._quantity
 
     def change_price(self, price : str | int) -> None:
         _price = self._convert_to_int_or_none(price)
-        if isinstance(_price, str):
+        if _price is not None:
             self._price = _price
     
     def change_quantity(self, quantity : str | int) -> None:
         _quantity = self._convert_to_int_or_none(quantity)
-        if isinstance(_quantity, str):
+        if _quantity is not None:
             self._quantity = _quantity
 
     def to_dict(self) -> dict[str,str]:

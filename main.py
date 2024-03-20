@@ -49,6 +49,7 @@ _d0 |= {"price": "42"}
 _factory = DataClassFactory()
 _p1 = _factory.create_product(**_d0)[0]
 
+print(_p0.to_dict())
 print(_p0.to_string())
 print(_p1.to_string())
 

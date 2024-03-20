@@ -17,7 +17,7 @@ class Transaction(UniqueData):
         self._type : str = type
     
     @property
-    def product_id(self) -> Product:
+    def product_id(self) -> str:
         return self._product_id
     
     @property
