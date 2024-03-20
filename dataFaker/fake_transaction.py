@@ -22,8 +22,8 @@ class FakeTransaction(AbsFaker):
         return _factory.create_transaction(
             self.get_next_id(),
             product.id,
-            str( self._create_date()),
-            str(_tansaction_amount),
+            self._create_date(),
+            _tansaction_amount,
             "Sell" if _tansaction_amount < 0 else "Buy"
         )
     

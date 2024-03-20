@@ -23,8 +23,8 @@ class FakeProduct(AbsFaker):
             self._generate_product_name(catagory.name),
             self._create_sentence(),
             catagory.id,
-            str(_price),
-            str(_quantity)
+            _price,
+            _quantity
         )
 
     def _generate_product_name(self, catagory : str):

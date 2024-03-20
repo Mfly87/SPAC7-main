@@ -11,6 +11,12 @@ class UniqueNamedData(UniqueData):
     def name(self) -> str:
         return self._name
     
+    def change_name(self, name : str) -> None:
+        self._name = name
+
+    def change_description(self, description : str) -> None:
+        self._description = description
+
     @property
     def description(self) -> str:
         return self._description

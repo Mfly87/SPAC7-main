@@ -1,4 +1,6 @@
 from dataClasses.dataTypes import Product
+from dataClasses.dataTypes import Transaction
+
 from userInterface.user_interaction import UserInteraction
 from warehouse import WarehouseOOP
 
@@ -27,8 +29,10 @@ for _ in range(100):
         _product_list.append(_product)
         _wh.update_item(_product)
 
+_transaction_list : list[Transaction] = []
 for _ in range(100):
     for _transaction in _transaction_faker.generate_fake_item_from_product_list(_product_list):
+        _transaction_list.append(_transaction)
         _wh.update_item(_transaction)
 
 print(str(_wh.item_count) + " items in warehouse")
@@ -50,5 +54,18 @@ print(_p1.to_string())
 
 _wh.update_item(_p1)
 
-_p2 = _wh.get_items(["Prod-000000"])[0]
+_p2: Product = _wh.get_items(["Prod-000000"])[0]
 print(_p2.to_string())
+
+_p2.change_price(None)
+
+_t = _transaction_list[0]
+print(_t.to_string())
+
+_t.change_date("1042-12-1")
+print(_t.to_string())
+
+_wh.update_item(_t)
+
+_t2: Product = _wh.get_items([_t.id])[0]
+print(_t2.to_string())
