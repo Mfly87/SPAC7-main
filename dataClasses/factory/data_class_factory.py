@@ -1,6 +1,6 @@
-from .dataTypes import Category
-from .dataTypes import Product
-from .dataTypes import Transaction
+from ..dataTypes import Category
+from ..dataTypes import Product
+from ..dataTypes import Transaction
 
 class DataClassFactory():
 

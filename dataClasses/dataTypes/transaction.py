@@ -4,17 +4,17 @@ from datetime import datetime
 from .product import Product
 
 class Transaction(UniqueData):
-    def __init__(self, id : str, product : Product, date : datetime, quantity : int, type : str) -> None:
+    def __init__(self, id : str, product_id : str, date : datetime, quantity : int, type : str) -> None:
         super().__init__(id)
         
-        self._product : Product = product
+        self._product_id : str = product_id
         self._date : datetime = date
         self._quantity : int = quantity
         self._type : str = type
     
     @property
-    def product(self) -> Product:
-        return self._product
+    def product_id(self) -> Product:
+        return self._product_id
     
     @property
     def date(self) -> datetime:
@@ -36,7 +36,7 @@ class Transaction(UniqueData):
         return {
             "class": type(self).__name__,
             "id": self.id,
-            "product_id": self.product.id,
+            "product_id": self.product_id,
             "timestamp": self.timestamp,
             "type": self.type,
             "quantity": str(self.quantity),
@@ -45,7 +45,7 @@ class Transaction(UniqueData):
     def to_string(self) -> str:
         return " | ".join([
             self.id,
-            self.product.id,
+            self.product_id,
             self.timestamp,
             "Qty: " + str(self.quantity),
             self.type,

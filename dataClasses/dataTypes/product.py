@@ -2,16 +2,16 @@ from ..absDataTypes import UniqueNamedData
 from .category import Category
 
 class Product(UniqueNamedData):
-    def __init__(self, id : str, name : str, description : str, category : Category, price : float, quantity : int) -> None:
+    def __init__(self, id : str, name : str, description : str, category_id : str, price : float, quantity : int) -> None:
         super().__init__(id, name, description)
 
-        self._category : Category = category
+        self._category_id : Category = category_id
         self._price : float = price
         self._quantity : int = quantity
     
     @property
-    def category(self) -> Category:
-        return self._category
+    def category_id(self) -> Category:
+        return self._category_id
     
     @property
     def price(self) -> float:
@@ -27,7 +27,7 @@ class Product(UniqueNamedData):
             "id": self.id,
             "name": self.name,
             "description": self.description,
-            "category_id": self.category.id,
+            "category_id": self.category_id,
             "price": str(self.price),
             "quantity": str(self.quantity),
         }
@@ -37,7 +37,7 @@ class Product(UniqueNamedData):
             self.id,
             self.name,
             self.description,
-            self.category.name,
+            self.category_id,
             str(self.price) + ",-kr.",
             "Qty: " + str(self.quantity)
         ])

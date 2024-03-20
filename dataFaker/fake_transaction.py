@@ -1,7 +1,7 @@
 from .abs_faker import AbsFaker
 from datetime import datetime
 
-from dataClasses import DataClassFactory
+from dataClasses.factory import DataClassFactory
 from dataClasses.dataTypes import Product
 from dataClasses.dataTypes import Transaction
 
@@ -21,7 +21,7 @@ class FakeTransaction(AbsFaker):
         
         return _factory.create_transaction(
             self.get_next_id(),
-            product,
+            product.id,
             self._create_date(),
             _tansaction_amount,
             "Sell" if _tansaction_amount < 0 else "Buy"

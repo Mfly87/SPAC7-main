@@ -3,6 +3,9 @@ from userInterface.user_interaction import UserInteraction
 from warehouse import WarehouseOOP
 
 
+from dataClasses.factory import FactoryCategory
+
+
 from dataFaker import FakeCategory
 from dataFaker import FakeProduct
 from dataFaker import FakeTransaction
@@ -43,6 +46,8 @@ for _data in _data_list:
         _data._quantity += 100
     _wh.update_item(_data)
 
-_data_list = _wh.search_item("Tran-00005")
+_data_list = _wh.search_item("010")
 for _data in _data_list:
     print(_data.to_dict())
+
+
