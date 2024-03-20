@@ -2,7 +2,7 @@ from dataFaker import FakeCategory
 from dataFaker import FakeProduct
 from dataFaker import FakeTransaction
 
-if __name__ == "main":
+def fake_main():
     _product_factory = FakeProduct()
     _category_factory = FakeCategory()
     _transaction_factory = FakeTransaction()
@@ -16,3 +16,6 @@ if __name__ == "main":
     for _ in range(10):
         _transaction = _transaction_factory.generate_fake_item(_product)
         print(_transaction.to_string())
+
+if __name__ == "main":
+    fake_main()

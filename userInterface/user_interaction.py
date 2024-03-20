@@ -1,9 +1,13 @@
 from .user_action_factory import UserActionFactory
 from .user_choice_selector import UserChoiceSelector
 
+from warehouse import AbsWarehouse
+
 class UserInteraction():
-    
-    _interaction_dict : dict = dict()
+
+    def __init__(self, warehouse : AbsWarehouse) -> None:
+        self._interaction_dict : dict = dict()
+        self._interaction_dict |= {"warehouse": warehouse}        
 
     def start_interation(self):
         self.interaction_loop()

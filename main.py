@@ -1,6 +1,6 @@
 from dataClasses.dataTypes import Product
 from userInterface.user_interaction import UserInteraction
-from warehouse.absWarehouse import WarehouseOOP
+from warehouse import WarehouseOOP
 
 
 from dataFaker import FakeCategory
