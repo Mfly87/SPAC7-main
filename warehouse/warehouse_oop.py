@@ -25,7 +25,9 @@ class WarehouseOOP(AbsWarehouse):
         return _item_list
 
     def update_item(self, item : UniqueData) -> None:
-        self._storage |= {item.id: item}
+        _id = item.id.lower()
+        self._storage |= {_id: item}
 
     def delete_item(self, item : UniqueData) -> None:
-        del self._storage[item.id]
+        _id = item.id.lower()
+        del self._storage[_id]

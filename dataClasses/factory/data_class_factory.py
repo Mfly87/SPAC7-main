@@ -1,6 +1,4 @@
-from ..dataTypes import Category
-from ..dataTypes import Product
-from ..dataTypes import Transaction
+from ..dataTypes import Category, Product, Transaction
 from ..absDataTypes import UniqueData
 
 class DataClassFactory():

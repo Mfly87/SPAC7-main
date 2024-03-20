@@ -24,6 +24,20 @@ for _category in _category_list:
     _wh.update_item(_category)
 
 _product_list : list[Product] = []
+
+_product_faker.set_seed(0)
+for _product in _product_faker.generate_fake_item_from_category_list(_category_list):
+    _product_list.append(_product)
+
+_product_faker.set_seed(0)
+for _product in _product_faker.generate_fake_item_from_category_list(_category_list):
+    _product_list.append(_product)
+
+print(_product_list[0].to_string())
+print(_product_list[1])
+print("_product_list[1]")
+
+
 for _ in range(100):
     for _product in _product_faker.generate_fake_item_from_category_list(_category_list):
         _product_list.append(_product)
@@ -40,7 +54,7 @@ print(str(_wh.item_count) + " items in warehouse")
 #user_interaction.start_interation()
 
 
-_p0 = _wh.get_items(["Prod-000000"])[0]
+_p0 = _wh.get_items(["Prod-000005"])[0]
 _d0 = _p0.to_dict()
 print(_d0)
 
@@ -55,7 +69,7 @@ print(_p1.to_string())
 
 _wh.update_item(_p1)
 
-_p2: Product = _wh.get_items(["Prod-000000"])[0]
+_p2: Product = _wh.get_items(["Prod-000005"])[0]
 print(_p2.to_string())
 
 _p2.change_price(None)

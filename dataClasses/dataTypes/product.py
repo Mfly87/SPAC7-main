@@ -26,13 +26,19 @@ class Product(UniqueNamedData):
 
     def change_price(self, price : str | int) -> None:
         _price = self._convert_to_int_or_none(price)
-        if _price is not None:
-            self._price = _price
+        if _price is None:
+            return    
+        if _price < 0:
+            return
+        self._price = _price
     
     def change_quantity(self, quantity : str | int) -> None:
         _quantity = self._convert_to_int_or_none(quantity)
-        if _quantity is not None:
-            self._quantity = _quantity
+        if _quantity is None:
+            return
+        if _quantity < 0:
+            return
+        self._quantity = _quantity
 
     def to_dict(self) -> dict[str,str]:
         return {

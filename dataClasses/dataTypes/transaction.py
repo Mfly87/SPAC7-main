@@ -5,6 +5,7 @@ from .product import Product
 
 class Transaction(UniqueData):
     _date : datetime = datetime(1900,1,1)
+    _quantity : int = 0
     
     def __init__(self, id: str, product_id: str, date: datetime, quantity: int, type: str) -> None:
         super().__init__(id)
@@ -12,8 +13,6 @@ class Transaction(UniqueData):
         self._product_id : str = product_id
         self.change_date(date)
         self.change_quantity(quantity)
-
-        self._quantity : str = quantity
         self._type : str = type
     
     @property
@@ -30,13 +29,17 @@ class Transaction(UniqueData):
     
     def change_date(self, date : str | datetime) -> None:
         _date = self._convert_to_datetime_or_none(date)
-        if _date is not None:
-            self._date = _date
+        if _date is None:
+            return
+        self._date = _date
 
     def change_quantity(self, quantity : str | int) -> None:
         _quantity = self._convert_to_int_or_none(quantity)
-        if _quantity is not None:
-            self._quantity = _quantity
+        if _quantity is None:
+            return
+        if _quantity < 0:
+            return
+        self._quantity = _quantity
 
     @property
     def quantity(self) -> int:
