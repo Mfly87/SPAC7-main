@@ -16,16 +16,16 @@ class FakeTransaction(AbsFaker):
     
     def generate_fake_item(self, product : Product) -> list[Transaction]:
         _factory = DataClassFactory()
-        
         _tansaction_amount = self._create_non_zero_transaction_amount()
-        
-        return _factory.create_transaction(
+        _params = [
             self.get_next_id(),
             product.id,
             self._create_date(),
             _tansaction_amount,
             "Sell" if _tansaction_amount < 0 else "Buy"
-        )
+        ]
+        print(_params)
+        return _factory.create_transaction(*_params)
     
     def _create_non_zero_transaction_amount(self) -> int:
         _value = 0

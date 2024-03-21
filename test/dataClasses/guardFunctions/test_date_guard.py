@@ -1,5 +1,5 @@
 from parameterized import parameterized
-from datetime import datetime
+from datetime import datetime, date
 import dataClasses.guardFunctions.date_func as date_func
 
 from dataClasses.dataTypes import Category
@@ -12,6 +12,7 @@ class TestIntGuard():
         ["1900-01-01", datetime],
         ["01-01-1900", None],
         [datetime(1900,1,1), datetime],
+        [date(1900,1,1), datetime],
     ])
     def test_int_is_int(self, value, expected_type):
         _obj = Category("abc", "abc", "abc")

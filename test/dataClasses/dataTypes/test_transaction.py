@@ -1,6 +1,6 @@
 from parameterized import parameterized
 
-from datetime import datetime
+from datetime import datetime, date
 
 from dataClasses.dataTypes import Transaction
 from dataClasses import DataClassFactory
@@ -29,6 +29,7 @@ class TestProduct():
         ["1900-01-01", True],
         ["01-01-1900", False],
         [datetime(1900,1,1), True],
+        [date(1900,1,1), True],
     ]
 
     
