@@ -7,7 +7,7 @@ class Transaction(UniqueData):
     _date : datetime = datetime(1900,1,1)
     _quantity : int = 0
     
-    def __init__(self, id: str, product_id: str, date: datetime, quantity: int, type: str) -> None:
+    def __init__(self, id: str, product_id: str, date: str | datetime, quantity: int, type: str) -> None:
         super().__init__(id)
         
         self._product_id : str = product_id
@@ -49,7 +49,7 @@ class Transaction(UniqueData):
     def type(self) -> str:
         return self._type
         
-    def to_dict(self) -> dict[str,str]:
+    def to_dict(self) -> dict[str,any]:
         return {
             "class": type(self).__name__,
             "id": self.id,

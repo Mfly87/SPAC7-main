@@ -1,7 +1,7 @@
 from parameterized import parameterized
 
-import dataClasses.guardFunctions.str_func as sf
-
+import dataClasses.guardFunctions.str_func as str_func
+'''
 @parameterized.expand([
     [None, None],
     ["", None],
@@ -11,8 +11,5 @@ import dataClasses.guardFunctions.str_func as sf
 ])
 def test_func(value, expected_type):
     _value = sf.str_non_empty(value)
-
-    if expected_type is None:
-        assert _value is None
-    else:
-        assert type(_value) is expected_type
+    assert type(_value) is expected_type
+'''

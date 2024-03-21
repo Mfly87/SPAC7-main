@@ -19,3 +19,17 @@ class TestUniqueData():
         if is_valid:
             assert isinstance(sut.id, str)
     
+    @parameterized.expand([
+        [0, True, "Should be equal to self"],
+        [1, True, "Should be equal to identical copy"],
+        [2, False, "Should not be equal to variant"],
+    ])
+    def test_eq_comparison(self, index, is_valid, message):
+        sut_list = [
+            Category("abc", "abc", "abc"),
+            Category("abc", "abc", "abc"),
+            Category("xyz", "xyz", "xyz"),
+        ]
+
+        sut = sut_list[0] == sut_list[index]
+        assert sut == is_valid, message

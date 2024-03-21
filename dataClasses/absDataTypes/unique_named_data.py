@@ -18,7 +18,7 @@ class UniqueNamedData(UniqueData):
     def name(self) -> str:
         return self._name
     @name.setter
-    def name(self, value) -> str:
+    def name(self, value) -> None:
         _value = str_non_empty(value)
         if _value is not None:
             self._name = _value
@@ -27,7 +27,7 @@ class UniqueNamedData(UniqueData):
     def description(self) -> str:
         return self._description
     @description.setter
-    def description(self, value) -> str:
+    def description(self, value) -> None:
         _value = str_non_empty(value)
         if _value is not None:
             self._description = _value

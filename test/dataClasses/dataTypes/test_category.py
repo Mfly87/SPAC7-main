@@ -51,7 +51,6 @@ class TestCategory():
 
         sut = Category(_id, _name, _description)
         _dict = sut.to_dict()
-        assert _dict["class"] == "Casdftegory"
 
         assert _dict["class"] == "Category"
         assert _dict["id"] == _id
@@ -59,27 +58,26 @@ class TestCategory():
         assert _dict["description"] == _description
 
     def test_has_factory(self):
-        _id = "abc"
-        _name = "Apple"
-        _description = "Not the fruit"
-        _base = Category(_id, _name, _description)
+        _params = ["abc", "Apple", "Not the fruit"]
+        _base = Category(*_params)
+        _category_list = DataClassFactory.create_category(*_params)
+        assert len(_category_list) == 1
+        for _sut in _category_list:
+            assert _base == _sut
 
-        sut: Category = DataClassFactory.create_category(_id, _name, _description)
-        
-        assert isinstance(sut, Category)
-
-        assert _base.id == sut.id
-        assert _base.name == sut.name
-        assert _base.description == sut.description
+    def test_factory_doesnt_create_defects(self):
+        _category_list = DataClassFactory.create_category(None, None, None)
+        assert len(_category_list) == 0
 
     def test_factory_can_copy_from_dict(self):
         _base = Category("abc", "Apple", "Not the fruit")
-        
-        sut: Category = DataClassFactory.create_category(**sut.to_dict())
-        
-        assert isinstance(sut, Category)
+        _dict = _base.to_dict()
 
-        assert _base.id != sut.id
-        assert _base.name == sut.name
-        assert _base.description == sut.description
+        _category_list = DataClassFactory.create_category(**_dict)
+        assert len(_category_list) == 1
+        for _sut in _category_list:
+            assert isinstance(_sut, Category)
 
+            assert _base.id == _sut.id
+            assert _base.name == _sut.name
+            assert _base.description == _sut.description

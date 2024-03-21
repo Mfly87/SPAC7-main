@@ -20,7 +20,7 @@ class UniqueData(abc.ABC):
     def id(self) -> str:
         return self._id
     @id.setter
-    def id(self, value) -> str:
+    def id(self, value) -> None:
         _value = str_non_empty(value)
         if _value is not None:
             self._id = _value
@@ -30,7 +30,7 @@ class UniqueData(abc.ABC):
         pass
 
     @abc.abstractclassmethod
-    def to_dict(self) -> dict[str,str]:
+    def to_dict(self) -> dict[str,any]:
         pass
 
     def matches_search(self, search_string : str) -> bool:
@@ -48,6 +48,25 @@ class UniqueData(abc.ABC):
                 return False
         return True
     
+    def __eq__(self, __value: object) -> bool:
+        if type(self) is not type(__value):
+            return False
+        
+        _dict_a = self.to_dict()
+        _dict_b = __value.to_dict()
+
+        if len(_dict_a.keys()) != len(_dict_b.keys()):
+            return False
+        
+        for _key in _dict_a:
+            if not _key in _dict_b:
+                return False
+            if _dict_a[_key] != _dict_b[_key]:
+                return False
+        
+        return True
+        
+
 
 
 
