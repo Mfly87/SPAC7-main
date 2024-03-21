@@ -31,12 +31,3 @@ class UniqueNamedData(UniqueData):
         _value = str_non_empty(value)
         if _value is not None:
             self._description = _value
-
-    def matches_search(self, search_string : str) -> bool:
-        if super().matches_search(search_string):
-            return True
-        if re.search(search_string, self.name, re.IGNORECASE):
-            return True
-        if re.search(search_string, self.description, re.IGNORECASE):
-            return True
-        return False

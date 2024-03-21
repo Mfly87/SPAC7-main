@@ -83,16 +83,3 @@ class Transaction(UniqueData):
             "Qty: " + str(self.quantity),
             self.type,
         ])
-    
-    def _convert_to_datetime_or_none(self, value : any) -> int | None:
-        if isinstance(value, str):
-            try:
-                value = datetime.strptime(value, self.date_format)
-            except ValueError as ex:
-                template = "   An exception of type {0} occurred. Arguments:\n{1!r}"
-                message = template.format(type(ex).__name__, ex.args)
-                print( message )
-                return
-        if isinstance(value, datetime):
-            return value
-        return None
