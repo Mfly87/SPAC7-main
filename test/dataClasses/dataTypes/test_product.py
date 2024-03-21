@@ -22,7 +22,7 @@ class TestProduct():
     ]
 
     @parameterized.expand(param_string_guard)
-    def test_params_are_guarded(self, id, is_valid):
+    def test_id_is_guarded(self, id, is_valid):
         sut = Product(id, "abc", "abc", "abc", 123, 123)
         assert sut.is_valid() == is_valid
         if is_valid:
@@ -75,7 +75,7 @@ class TestProduct():
             assert _base == _sut
 
     def test_factory_doesnt_create_defects(self):
-        _category_list = DataClassFactory.create_product(None, None, None, None, None, None, None)
+        _category_list = DataClassFactory.create_product(None, None, None, None, None, None)
         assert len(_category_list) == 0
 
     def test_factory_can_copy_from_dict(self):

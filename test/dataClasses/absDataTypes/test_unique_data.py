@@ -1,6 +1,8 @@
 from parameterized import parameterized
 from dataClasses.dataTypes import Category
 
+from datetime import datetime
+
 # Uses Category as non-abstract class for example
 
 class TestUniqueData():
@@ -33,3 +35,10 @@ class TestUniqueData():
 
         sut = sut_list[0] == sut_list[index]
         assert sut == is_valid, message
+
+    def test_time_format(self):
+        sut = Category("xyz", "xyz", "xyz")
+        _date = datetime(1900,11,12)
+        _str_from_date = _date.strftime(sut.date_format)
+        
+        assert _str_from_date == "1900-11-12"
