@@ -25,14 +25,6 @@ for _category in _category_list:
 
 _product_list : list[Product] = []
 
-_product_faker.set_seed(0)
-for _product in _product_faker.generate_fake_item_from_category_list(_category_list):
-    _product_list.append(_product)
-
-_product_faker.set_seed(0)
-for _product in _product_faker.generate_fake_item_from_category_list(_category_list):
-    _product_list.append(_product)
-
 for _ in range(100):
     for _product in _product_faker.generate_fake_item_from_category_list(_category_list):
         _product_list.append(_product)
@@ -49,3 +41,8 @@ print(str(_wh.item_count) + " items in warehouse")
 print("categories: " + str(len(_category_list)))
 print("products: " + str(len(_product_list)))
 print("transactions: " + str(len(_transaction_list)))
+
+_search_list = _wh.search_item("09")
+print(str(len(_search_list)) + " results")
+for _item in _search_list:
+    print(_item.to_string())

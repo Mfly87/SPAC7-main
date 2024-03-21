@@ -49,7 +49,7 @@ class WarehouseOOP(AbsWarehouse):
     def matches_search(obj: any, search_string: str) -> bool:
         if WarehouseOOP.matches_search_unique_data(obj, search_string):
             return True
-        if WarehouseOOP.matches_search_unique_data(obj, search_string):
+        if WarehouseOOP.matches_search_unique_named_data(obj, search_string):
             return True
         return False
 
