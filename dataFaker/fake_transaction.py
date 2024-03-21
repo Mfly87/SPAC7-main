@@ -24,7 +24,6 @@ class FakeTransaction(AbsFaker):
             _tansaction_amount,
             "Sell" if _tansaction_amount < 0 else "Buy"
         ]
-        print(_params)
         return _factory.create_transaction(*_params)
     
     def _create_non_zero_transaction_amount(self) -> int:
