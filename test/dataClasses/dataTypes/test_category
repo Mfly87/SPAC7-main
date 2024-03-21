@@ -1,0 +1,85 @@
+from parameterized import parameterized
+
+from dataClasses.dataTypes import Category
+from dataClasses import DataClassFactory
+
+class TestCategory():
+
+    @parameterized.expand([
+        [None, False],
+        ["", False],
+        [" ", False],
+        ["abc", True],
+        [123, True],
+    ])
+    def test_id_is_guarded(self, id, is_valid):
+        sut = Category(id, "Apple", "Not the fruit")
+        assert sut.is_valid() == is_valid
+        if is_valid:
+            assert isinstance(sut.id, str)
+
+    @parameterized.expand([
+        [None, False],
+        ["", False],
+        [" ", False],
+        ["Apple", True],
+        [12345, True],
+    ])
+    def test_name_is_guarded(self, name, is_valid):
+        sut = Category("abc", name, "Not the fruit")
+        assert sut.is_valid() == is_valid
+        if is_valid:
+            assert isinstance(sut.id, str)
+    
+    @parameterized.expand([
+        [None, False],
+        ["", False],
+        [" ", False],
+        ["Not the fruit", True],
+        [12345, True],
+    ])
+    def test_description_is_guarded(self, description, is_valid):
+        sut = Category("abc", "Apple", description)
+        assert sut.is_valid() == is_valid
+        if is_valid:
+            assert isinstance(sut.id, str)
+
+    def test_to_dict(self):
+        _id = "abc"
+        _name = "Apple"
+        _description = "Not the fruit"
+
+        sut = Category(_id, _name, _description)
+        _dict = sut.to_dict()
+        assert _dict["class"] == "Casdftegory"
+
+        assert _dict["class"] == "Category"
+        assert _dict["id"] == _id
+        assert _dict["name"] == _name
+        assert _dict["description"] == _description
+
+    def test_has_factory(self):
+        _id = "abc"
+        _name = "Apple"
+        _description = "Not the fruit"
+        _base = Category(_id, _name, _description)
+
+        sut: Category = DataClassFactory.create_category(_id, _name, _description)
+        
+        assert isinstance(sut, Category)
+
+        assert _base.id == sut.id
+        assert _base.name == sut.name
+        assert _base.description == sut.description
+
+    def test_factory_can_copy_from_dict(self):
+        _base = Category("abc", "Apple", "Not the fruit")
+        
+        sut: Category = DataClassFactory.create_category(**sut.to_dict())
+        
+        assert isinstance(sut, Category)
+
+        assert _base.id != sut.id
+        assert _base.name == sut.name
+        assert _base.description == sut.description
+

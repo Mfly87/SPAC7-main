@@ -2,10 +2,15 @@ import abc
 import re
 from datetime import datetime
 
+from ..guardFunctions.str_func import str_non_empty
+
 class UniqueData(abc.ABC):
+
+    _id : str = None
+
     def __init__(self, id : str) -> None:
         super().__init__()
-        self._id = str(id).strip().lower()
+        self.id = id
 
     @property
     def date_format(self) -> str:
@@ -14,6 +19,11 @@ class UniqueData(abc.ABC):
     @property
     def id(self) -> str:
         return self._id
+    @id.setter
+    def id(self, value) -> str:
+        _value = str_non_empty(value)
+        if _value is not None:
+            self._id = _value
     
     @abc.abstractclassmethod
     def to_string(self) -> str:
@@ -32,7 +42,7 @@ class UniqueData(abc.ABC):
         return False
         
     def is_valid(self):
-        _dict = self.__dict__
+        _dict = self.to_dict()
         for _value in _dict.values():
             if _value is None:
                 return False
