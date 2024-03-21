@@ -17,7 +17,7 @@ class TestProduct():
 
     param_int_guard = [
         [None, False],
-        [-1, False],
+        [-1, True],
         [0, True],
         [1, True],
         [3.14, False],

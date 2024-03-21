@@ -3,7 +3,7 @@ from ..absDataTypes import UniqueData
 from datetime import datetime
 
 from ..guardFunctions.str_func import str_non_empty
-from ..guardFunctions.int_func import int_zero_or_greater
+from ..guardFunctions.int_func import int_is_int
 from ..guardFunctions.date_func import date_is_date
 
 
@@ -46,7 +46,7 @@ class Transaction(UniqueData):
         return self._quantity
     @quantity.setter
     def quantity(self, value) -> None:
-        _value = int_zero_or_greater(value)
+        _value = int_is_int(value)
         if _value is not None:
             self._quantity = _value
 
