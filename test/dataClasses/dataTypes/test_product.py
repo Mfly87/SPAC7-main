@@ -3,6 +3,8 @@ from parameterized import parameterized
 from dataClasses.dataTypes import Product
 from dataClasses import DataClassFactory
 
+from dataFaker import FakeCategory, FakeProduct
+
 class TestProduct():
 
     param_string_guard = [

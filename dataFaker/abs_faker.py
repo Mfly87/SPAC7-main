@@ -53,3 +53,6 @@ class AbsFaker(abc.ABC):
     def _get_rand_item(self, item_list : list):
         _index = self._create_int(0, len(item_list) - 1)
         return item_list[_index]
+    
+    def _create_job(self) -> str:
+        return self._faker.job()

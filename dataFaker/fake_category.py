@@ -31,11 +31,15 @@ class FakeCategory(AbsFaker):
     def generate_fake_item_list(self) -> list[Category]:
         _category_list = []
         for _category_name in self.fake_category_names:
-            for _category in self.generate_fake_item(_category_name):
+            for _category in self._generate_fake_item(_category_name):
                 _category_list.append(_category)
         return _category_list
 
-    def generate_fake_item(self, category_name : str) -> list[Category]:
+    def generate_fake_item(self, *args) -> list[Category]:
+        _fake_name = self._create_job()
+        return self._generate_fake_item(_fake_name)
+
+    def _generate_fake_item(self, category_name : str) -> list[Category]:
         _factory = DataClassFactory()
         return _factory.create_category(
             self.get_next_id(),

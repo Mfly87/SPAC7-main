@@ -3,6 +3,8 @@ from parameterized import parameterized
 from dataClasses.dataTypes import Category
 from dataClasses import DataClassFactory
 
+from dataFaker import FakeCategory
+
 class TestCategory():
 
     @parameterized.expand([
@@ -44,6 +46,10 @@ class TestCategory():
         if is_valid:
             assert isinstance(sut.id, str)
 
+
+
+
+
     def test_to_dict(self):
         _id = "abc"
         _name = "Apple"
@@ -81,3 +87,28 @@ class TestCategory():
             assert _base.id == _sut.id
             assert _base.name == _sut.name
             assert _base.description == _sut.description
+
+
+
+'''
+    def test_faker_creates_unique_ids(self):
+        _faker = FakeCategory()
+        _fake_category_list = _faker.generate_fake_item_list()
+
+        while 0 < len(_fake_category_list):
+            sut = _fake_category_list.pop()
+            for _category in _fake_category_list:
+                assert sut.id != _category.id
+
+    def test_faker_creates_unique(self):
+        _faker = FakeCategory()
+        _fake_category_list = _faker.generate_fake_item_list()
+
+        for _category in _fake_category_list:
+            _category.id = "abc"
+
+        while 0 < len(_fake_category_list):
+            sut = _fake_category_list.pop()
+            for _category in _fake_category_list:
+                assert sut != _category
+'''
