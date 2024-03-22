@@ -76,10 +76,25 @@ class Transaction(UniqueData):
         }
 
     def to_string(self) -> str:
-        return " | ".join([
+        _list = self.to_list()
+        _list[3] = "Qty: %i" % (_list[3])
+        return " | ".join(_list)
+    
+    def to_list(self) -> list[any]:
+        return [
             self.id,
             self.product_id,
             self.timestamp,
-            "Qty: " + str(self.quantity),
+            self.quantity,
             self.type,
-        ])
+            ]
+    
+    @staticmethod
+    def get_headers() -> list[str]:
+        return [
+            "id",
+            "product_id",
+            "timestamp",
+            "quantity",
+            "type",
+        ]

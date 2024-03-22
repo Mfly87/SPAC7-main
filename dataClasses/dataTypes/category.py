@@ -13,8 +13,19 @@ class Category(UniqueNamedData):
         }
 
     def to_string(self) -> str:
-        return " | ".join([
+        return " | ".join(self.to_list())
+    
+    def to_list(self) -> list[any]:
+        return [
             self.id,
             self.name,
             self.description,
-        ])
+        ]
+    
+    @staticmethod
+    def get_headers() -> list[str]:
+        return [
+            "id",
+            "name",
+            "description",
+        ]

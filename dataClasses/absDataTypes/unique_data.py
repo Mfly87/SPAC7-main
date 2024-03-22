@@ -32,6 +32,14 @@ class UniqueData(abc.ABC):
     def to_dict(self) -> dict[str,any]:
         pass
 
+    @abc.abstractclassmethod
+    def to_list(self) -> list[any]:
+        pass
+
+    @abc.abstractstaticmethod
+    def get_headers() -> list[str]:
+        pass
+
     def is_valid(self):
         _dict = self.to_dict()
         for _value in _dict.values():

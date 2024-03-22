@@ -55,11 +55,28 @@ class Product(UniqueNamedData):
         }
     
     def to_string(self) -> str:
-        return " | ".join([
+        _list = self.to_list()
+        _list[4] = "%i,-" % (_list[4])
+        _list[5] = "Qty: %i" % (_list[5])
+        return " | ".join(_list)
+    
+    def to_list(self) -> list[any]:
+        return [
             self.id,
             self.name,
             self.description,
             self.category_id,
-            str(self.price) + ",-kr.",
-            "Qty: " + str(self.quantity)
-        ])  
+            self.price,
+            self.quantity
+        ]
+    
+    @staticmethod
+    def get_headers() -> list[str]:
+        return [
+            "id",
+            "name",
+            "description",
+            "category_id",
+            "price",
+            "quantity"
+        ]
