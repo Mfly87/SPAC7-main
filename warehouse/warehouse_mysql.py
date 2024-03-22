@@ -1,19 +1,15 @@
-import abc
+from .abs_warehouse import AbsWarehouse
 
-class AbsWarehouse(abc.ABC):
+class WarhouseMySQL(AbsWarehouse):
     
-    @abc.abstractclassmethod
     def search_item(self):
         pass
 
-    @abc.abstractclassmethod
     def get_items(self):
         pass
 
-    @abc.abstractclassmethod
     def update_item(self):
         pass
 
-    @abc.abstractclassmethod
     def delete_item(self):
         pass
