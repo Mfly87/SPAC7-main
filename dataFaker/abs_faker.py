@@ -1,6 +1,6 @@
 import abc
 from faker import Faker
-from datetime import datetime
+from datetime import datetime, date
 class AbsFaker(abc.ABC):
     def __init__(self) -> None:
         self._product_id : int = 0
@@ -37,7 +37,7 @@ class AbsFaker(abc.ABC):
         _transaction = ["Buy", "Sell"] #Return?
         return self._get_rand_item(_transaction)
     
-    def _create_date(self) -> datetime:
+    def _create_date(self) -> date:
         return self._faker.date_between(start_date = "-5y")
 
     def _create_awesomizer(self):
@@ -53,3 +53,6 @@ class AbsFaker(abc.ABC):
     def _get_rand_item(self, item_list : list):
         _index = self._create_int(0, len(item_list) - 1)
         return item_list[_index]
+    
+    def _create_job(self) -> str:
+        return self._faker.job()

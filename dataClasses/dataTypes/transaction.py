@@ -1,62 +1,78 @@
 from ..absDataTypes import UniqueData
 
 from datetime import datetime
-from .product import Product
+
+from ..guardFunctions.str_func import str_non_empty
+from ..guardFunctions.int_func import int_is_int
+from ..guardFunctions.date_func import date_is_date
+
 
 class Transaction(UniqueData):
-    _date : datetime = datetime(1900,1,1)
-    _quantity : int = 0
+
+    _product_id: str = None
+    _date: datetime = None
+    _quantity: int = None
+    _type: str = None
     
-    def __init__(self, id: str, product_id: str, date: datetime, quantity: int, type: str) -> None:
+    def __init__(self, id: str, product_id: str, date: str | datetime, quantity: int, type: str) -> None:
         super().__init__(id)
         
-        self._product_id : str = product_id
-        self.change_date(date)
-        self.change_quantity(quantity)
-        self._type : str = type
+        self.product_id = product_id
+        self.date = date
+        self.quantity = quantity
+        self.type = type
+        
     
     @property
     def product_id(self) -> str:
         return self._product_id
-    
+    @product_id.setter
+    def product_id(self, value) -> None:
+        _value = str_non_empty(value)
+        if _value is not None:
+            self._product_id = _value
+
     @property
     def date(self) -> datetime:
         return self._date
-    
-    @property
-    def timestamp(self) -> str:
-        return self.date.strftime(self.date_format)
-    
-    def change_date(self, date : str | datetime) -> None:
-        _date = self._convert_to_datetime_or_none(date)
-        if _date is None:
-            return
-        self._date = _date
-
-    def change_quantity(self, quantity : str | int) -> None:
-        _quantity = self._convert_to_int_or_none(quantity)
-        if _quantity is None:
-            return
-        if _quantity < 0:
-            return
-        self._quantity = _quantity
+    @date.setter
+    def date(self, value) -> None:
+        _value = date_is_date(value, self.date_format)
+        if _value is not None:
+            self._date = _value
 
     @property
     def quantity(self) -> int:
         return self._quantity
-    
+    @quantity.setter
+    def quantity(self, value) -> None:
+        _value = int_is_int(value)
+        if _value is not None:
+            self._quantity = _value
+
     @property
     def type(self) -> str:
         return self._type
-        
-    def to_dict(self) -> dict[str,str]:
+    @type.setter
+    def type(self, value) -> None:
+        _value = str_non_empty(value)
+        if _value is not None:
+            self._type = _value
+
+    @property
+    def timestamp(self) -> str:
+        if self._date is None:
+            return None
+        return self._date.strftime(self.date_format)
+
+    def to_dict(self) -> dict[str,any]:
         return {
             "class": type(self).__name__,
             "id": self.id,
             "product_id": self.product_id,
             "date": self.timestamp,
             "type": self.type,
-            "quantity": str(self.quantity),
+            "quantity": self.quantity,
         }
 
     def to_string(self) -> str:
@@ -67,16 +83,3 @@ class Transaction(UniqueData):
             "Qty: " + str(self.quantity),
             self.type,
         ])
-    
-    def _convert_to_datetime_or_none(self, value : any) -> int | None:
-        if isinstance(value, str):
-            try:
-                value = datetime.strptime(value, self.date_format)
-            except ValueError as ex:
-                template = "   An exception of type {0} occurred. Arguments:\n{1!r}"
-                message = template.format(type(ex).__name__, ex.args)
-                print( message )
-                return
-        if isinstance(value, datetime):
-            return value
-        return None

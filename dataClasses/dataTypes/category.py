@@ -4,7 +4,7 @@ class Category(UniqueNamedData):
     def __init__(self, id: str, name: str, description: str) -> None:
         super().__init__(id, name, description)
     
-    def to_dict(self) -> dict[str,str]:
+    def to_dict(self) -> dict[str,any]:
         return {
             "class": type(self).__name__,
             "id": self.id,
