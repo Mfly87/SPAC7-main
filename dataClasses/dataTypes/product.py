@@ -43,17 +43,6 @@ class Product(UniqueNamedData):
         if _value is not None:
             self._quantity = _value
 
-    def to_dict(self) -> dict[str,any]:
-        return {
-            "class": type(self).__name__,
-            "id": self.id,
-            "name": self.name,
-            "description": self.description,
-            "category_id": self.category_id,
-            "price": self.price,
-            "quantity": self.quantity,
-        }
-    
     def to_string(self) -> str:
         _list = self.to_list()
         _list[4] = "%i,-" % (_list[4])
@@ -67,7 +56,8 @@ class Product(UniqueNamedData):
             self.description,
             self.category_id,
             self.price,
-            self.quantity
+            self.quantity,
+            type(self).__name__,
         ]
     
     @staticmethod
@@ -78,5 +68,6 @@ class Product(UniqueNamedData):
             "description",
             "category_id",
             "price",
-            "quantity"
+            "quantity",
+            "class"
         ]

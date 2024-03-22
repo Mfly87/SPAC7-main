@@ -28,9 +28,8 @@ class UniqueData(abc.ABC):
     def to_string(self) -> str:
         pass
 
-    @abc.abstractclassmethod
     def to_dict(self) -> dict[str,any]:
-        pass
+        return dict(zip(self.get_headers(), self.to_list()))
 
     @abc.abstractclassmethod
     def to_list(self) -> list[any]:

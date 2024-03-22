@@ -21,8 +21,7 @@ class Transaction(UniqueData):
         self.date = date
         self.quantity = quantity
         self.type = type
-        
-    
+            
     @property
     def product_id(self) -> str:
         return self._product_id
@@ -65,16 +64,6 @@ class Transaction(UniqueData):
             return None
         return self._date.strftime(self.date_format)
 
-    def to_dict(self) -> dict[str,any]:
-        return {
-            "class": type(self).__name__,
-            "id": self.id,
-            "product_id": self.product_id,
-            "date": self.timestamp,
-            "type": self.type,
-            "quantity": self.quantity,
-        }
-
     def to_string(self) -> str:
         _list = self.to_list()
         _list[3] = "Qty: %i" % (_list[3])
@@ -87,6 +76,7 @@ class Transaction(UniqueData):
             self.timestamp,
             self.quantity,
             self.type,
+            type(self).__name__,
             ]
     
     @staticmethod
@@ -94,7 +84,8 @@ class Transaction(UniqueData):
         return [
             "id",
             "product_id",
-            "timestamp",
+            "date",
             "quantity",
             "type",
+            "class",
         ]
