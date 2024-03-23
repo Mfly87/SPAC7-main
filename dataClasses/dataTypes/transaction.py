@@ -92,4 +92,4 @@ class Transaction(UniqueData):
     
     @staticmethod
     def get_types() -> list[type]:
-        return [str, str, str, str, int, int, str]
+        return [str, str, str, int, str, str]

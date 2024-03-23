@@ -8,7 +8,10 @@ class QueryGenerator():
         _column_definitions = self._get_column_definitions(class_type)
         return "CREATE TABLE IF NOT EXISTS %s (%s)" % (_table_name, _column_definitions)
     
-    
+    def drop_table_for_class(self, class_type: UniqueData | type) -> str:
+        _table_name = self._get_table_name(class_type)
+        return "DROP TABLE %s" % (_table_name)
+        
     def generate_insertion_query(self, class_type: UniqueData | type) -> str:
         _table_name = self._get_table_name(class_type)
         _column_names = self._get_column_names(class_type)
@@ -19,14 +22,29 @@ class QueryGenerator():
         _table_name = self._get_table_name(class_type)
         _query = "SELECT %s FROM %s %s" % (output_rows, _table_name, search_term)
         return _query.strip()
+    
+    def generate_update_query(self,unique_data: UniqueData) -> str:
+        _table_name = self._get_table_name(unique_data)
+        _unique_data_values = self._unique_data_values(unique_data)
+        return "UPDATE %s SET %s WHERE id='%s'" % (_table_name, _unique_data_values, unique_data.id)
 
 
-    '''
-    def generete_search_query_beginning(self, class_type: UniqueData | type) -> str:
-        _column_names = self._get_column_names(class_type)
-        _table_name = self._get_table_name(class_type)
-        return "SELECT %s FROM %s" % (_column_names, _table_name)
-    '''
+
+    def _unique_data_values(self, unique_data: UniqueData):
+        _headers = unique_data.get_headers()
+        _sql_value_list = self._sql_value_list(unique_data)
+        _zip = ["%s = %s" % (a, b) for a, b in zip(_headers, _sql_value_list)]
+        return ", ".join(_zip)
+
+    def _sql_value_list(self,unique_data: UniqueData) -> list[str]:
+        _list = []
+        for _item in unique_data.to_list():
+            if isinstance(_item, str):
+                _list.append("'%s'" % (_item))
+            else:
+                _list.append("%s" % (_item))
+        return _list
+
 
 
 
@@ -67,7 +85,3 @@ class QueryGenerator():
         _types = self._get_sql_data_type_list(class_type)
         return ["%s %s" % (a, b) for a, b in zip(_headers, _types)]
         
-    
-    def _get_class_arguments(self, unique_data: UniqueData):
-
-        pass
