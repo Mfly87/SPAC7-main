@@ -26,3 +26,12 @@ class ForTestCategory(UniqueNamedData):
             "description",
             "class"
         ]
+    
+    @staticmethod
+    def get_types() -> list[type]:
+        return [
+            str,
+            str,
+            str,
+            str
+        ]

@@ -12,15 +12,15 @@ class Transaction(UniqueData):
     _product_id: str = None
     _date: datetime = None
     _quantity: int = None
-    _type: str = None
+    _transaction_type: str = None
     
-    def __init__(self, id: str, product_id: str, date: str | datetime, quantity: int, type: str, *args) -> None:
+    def __init__(self, id: str, product_id: str, date: str | datetime, quantity: int, transaction_type: str, *args) -> None:
         super().__init__(id)
         
         self.product_id = product_id
         self.date = date
         self.quantity = quantity
-        self.type = type
+        self.transaction_type = transaction_type
             
     @property
     def product_id(self) -> str:
@@ -50,13 +50,13 @@ class Transaction(UniqueData):
             self._quantity = _value
 
     @property
-    def type(self) -> str:
-        return self._type
-    @type.setter
-    def type(self, value) -> None:
+    def transaction_type(self) -> str:
+        return self._transaction_type
+    @transaction_type.setter
+    def transaction_type(self, value) -> None:
         _value = str_non_empty(value)
         if _value is not None:
-            self._type = _value
+            self._transaction_type = _value
 
     @property
     def timestamp(self) -> str:
@@ -75,7 +75,7 @@ class Transaction(UniqueData):
             self.product_id,
             self.timestamp,
             self.quantity,
-            self.type,
+            self.transaction_type,
             type(self).__name__,
             ]
     
@@ -86,6 +86,10 @@ class Transaction(UniqueData):
             "product_id",
             "date",
             "quantity",
-            "type",
+            "transaction_type",
             "class",
         ]
+    
+    @staticmethod
+    def get_types() -> list[type]:
+        return [str, str, str, str, int, int, str]

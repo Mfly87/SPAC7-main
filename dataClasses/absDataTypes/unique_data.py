@@ -35,6 +35,10 @@ class UniqueData(abc.ABC):
     @abc.abstractstaticmethod
     def get_headers() -> list[str]:
         pass
+    
+    @abc.abstractstaticmethod
+    def get_types() -> list[type]:
+        pass
 
     def to_dict(self) -> dict[str,any]:
         return dict(zip(self.get_headers(), self.to_list()))

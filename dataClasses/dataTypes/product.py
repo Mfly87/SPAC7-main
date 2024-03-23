@@ -71,3 +71,7 @@ class Product(UniqueNamedData):
             "quantity",
             "class"
         ]
+    
+    @staticmethod
+    def get_types() -> list[type]:
+        return [str, str, str, str, int, int, str]

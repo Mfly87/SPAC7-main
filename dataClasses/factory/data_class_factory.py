@@ -40,7 +40,7 @@ class DataClassFactory():
         return DataClassFactory._enlist_object( Category(id, name, description) )
     
     @staticmethod
-    def create_transaction(id : str, product_id : str, date : str | datetime, quantity : int, type, *args, **kwargs) -> list[Transaction]:
-        return DataClassFactory._enlist_object( Transaction(id, product_id, date, quantity, type) )
+    def create_transaction(id : str, product_id : str, date : str | datetime, quantity : int, transaction_type, *args, **kwargs) -> list[Transaction]:
+        return DataClassFactory._enlist_object( Transaction(id, product_id, date, quantity, transaction_type) )
         
     
