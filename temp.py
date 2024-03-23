@@ -9,5 +9,5 @@ _gen = QueryGenerator()
 
 
 print(_gen.generate_table_for_class(Category))
-print(_gen.generate_insertion_query(Category))
+print(_gen.generate_insert_many_query(Category))
 print(_gen.generate_search_query(Category))

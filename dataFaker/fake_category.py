@@ -36,7 +36,7 @@ class FakeCategory(AbsFaker):
         return _category_list
 
     def generate_fake_item(self) -> list[Category]:
-        _fake_name = self._create_job()
+        _fake_name = self._create_license_plate().replace(" ","-")
         return self._generate_fake_item(_fake_name)
 
     def _generate_fake_item(self, category_name : str) -> list[Category]:
