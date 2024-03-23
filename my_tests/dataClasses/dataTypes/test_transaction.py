@@ -62,8 +62,8 @@ class TestProduct():
             assert isinstance(sut.quantity, int)
 
     @parameterized.expand(param_string_guard)
-    def test_type_is_guarded(self, type, is_valid):
-        sut = Transaction("abc", "abc", datetime(1900,1,1), 123, type)
+    def test_type_is_guarded(self, transaction_type, is_valid):
+        sut = Transaction("abc", "abc", datetime(1900,1,1), 123, transaction_type)
         assert sut.is_valid() == is_valid
         if is_valid:
-            assert isinstance(sut.type, str)
+            assert isinstance(sut.transaction_type, str)
