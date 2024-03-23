@@ -1,8 +1,12 @@
-from datetime import date, datetime
+from dataClasses.dataTypes import Category
 
-a = date(1900,1,1)
-print(a)
+_a = Category("abc","abc","abc")
+_b = Category("xyz","xyz","xyz")
 
-b = datetime(1,1,1)
 
-print(b)
+_list_a = _a.to_list()
+_list_b = _b.to_list()
+
+for a, b in zip(_list_a, _list_b):
+    if a != b:
+        print("False")

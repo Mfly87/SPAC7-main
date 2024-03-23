@@ -35,7 +35,7 @@ class FakeCategory(AbsFaker):
                 _category_list.append(_category)
         return _category_list
 
-    def generate_fake_item(self, *args) -> list[Category]:
+    def generate_fake_item(self) -> list[Category]:
         _fake_name = self._create_job()
         return self._generate_fake_item(_fake_name)
 

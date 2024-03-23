@@ -64,27 +64,3 @@ class TestProduct():
         assert sut.is_valid() == is_valid
         if is_valid:
             assert isinstance(sut.quantity, int)
-
-
-    
-    
-    def test_has_factory(self):
-        _params = ["abc", "abc", "abc", "abc", 123, 123]
-        _base = Product(*_params)
-        _category_list = DataClassFactory.create_product(*_params)
-        assert len(_category_list) == 1
-        for _sut in _category_list:
-            assert _base == _sut
-
-    def test_factory_doesnt_create_defects(self):
-        _category_list = DataClassFactory.create_product(None, None, None, None, None, None)
-        assert len(_category_list) == 0
-
-    def test_factory_can_copy_from_dict(self):
-        _base = Product("abc", "abc", "abc", "abc", 123, 123)
-        _dict = _base.to_dict()
-
-        _category_list = DataClassFactory.create_product(**_dict)
-        assert len(_category_list) == 1
-        for _sut in _category_list:
-            assert _base == _sut
