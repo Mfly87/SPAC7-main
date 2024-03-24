@@ -6,32 +6,25 @@ class AbsUserAction(abc.ABC):
         self._user_interaction_data = user_interaction_data
 
     @property
-    def user_interaction_data(self):
+    def uid(self):
         return self._user_interaction_data
 
-    @abc.abstractproperty
+    @abc.abstractclassmethod
     def name(self) -> str:
         pass
-
-    @abc.abstractproperty
-    def required_state(self) -> str:
-        pass
-
-    def is_usable(self) -> bool:
-        return self.user_interaction_data.state == self.required_state
-
-    @abc.abstractproperty
-    def next_state(self) -> str:
-        pass
     
-    @abc.abstractproperty
+    @abc.abstractclassmethod
     def sort_priority(self) -> int:
         pass
-    
-    def execute_action(self):
-        self.action()
-        self.user_interaction_data.state = self.next_state    
 
     @abc.abstractclassmethod
+    def is_usable(self) -> bool:
+        pass
+    
+    @abc.abstractclassmethod
+    def execute_action(self) -> None:
+        pass   
+
+    #@abc.abstractclassmethod
     def action(self) -> None:
         pass

@@ -9,11 +9,10 @@ class UserActionFactory():
     _actions = {}
         
     def __init__(self) -> None:
-        self._loadProducts()
+        self._load_user_action_classes()
 
-    def _loadProducts(self):
+    def _load_user_action_classes(self):
         classes = getmembers(userActions, lambda m: isclass(m) and not isabstract(m) )
-        
         for name, _type in classes:
             if isclass(_type) and issubclass(_type, AbsUserAction):
                 self._actions.update([[name, _type]])
@@ -34,5 +33,4 @@ class UserActionFactory():
             if action_name in self._actions:
                 action = self._actions[action_name](user_interaction_data)
                 _list.append(action)
-                
         return _list

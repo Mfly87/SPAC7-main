@@ -6,19 +6,15 @@ class UserActionCancel(AbsUserAction):
     @property
     def name(self) -> str:
         return "Cancel"
-
-    @property
-    def required_state(self) -> str:
-        return ""
-
-    @property
-    def next_state(self) -> str:
-        return ""
     
     @property
     def sort_priority(self) -> int:
         return 999999
+
+    def is_usable(self) -> bool:
+        return self.uid.state == ""
     
-    def action(self) -> None:
+    def execute_action(self) -> None:
         print("Closing program")
-        self.user_interaction_data.end_interaction = True
+        print("\n\n")
+        self.uid.end_interaction = True

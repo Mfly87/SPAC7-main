@@ -28,6 +28,7 @@ class UserInteraction():
     def interaction_loop(self):        
         while (True):
             _user_action = self._get_user_action()
+            
             if _user_action is None:
                 return
             

@@ -21,6 +21,10 @@ class UserChoiceSelector():
 
     @staticmethod
     def get_user_choice_from_name_list(choice_name_list : list[str]) -> int:
+        if not choice_name_list:
+            print("There were no selection options")
+            return -1
+
         _index = UserChoiceSelector._get_choice_index(choice_name_list)
         print("You have selected: (" + str(_index) + ") " + choice_name_list[_index])
         print("")
@@ -34,6 +38,8 @@ class UserChoiceSelector():
 
             for i, _choice in enumerate(choice_name_list):
                 print("(" + str(i) + ") " + _choice)
+                if i % 3 == 2:
+                    print("")
 
             while(True):
                 print("")

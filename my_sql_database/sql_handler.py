@@ -1,5 +1,5 @@
-from dataClasses import UniqueData
-from dataClasses import dataTypes
+from dataClasses import dataTypes, DataClassFactory
+from dataClasses.absDataTypes import UniqueData, UniqueNamedData
 from .query_generator import QueryGenerator
 
 from inspect import getmembers, isclass, isabstract
@@ -90,6 +90,20 @@ class SQLHandler:
         _query = QueryGenerator.generate_update_query(unique_data)
         self.execute_querty(_query)
 
+
+    def search_keyword(self, _search_string: str) -> list[UniqueNamedData]:
+        _query_seach = f"WHERE name LIKE '%{_search_string}%' OR description LIKE '%{_search_string}%'"
+        _unique_data_list: list[UniqueNamedData] = []
+
+        for _type in self.get_table_types():
+            if not issubclass(_type, UniqueNamedData):
+                continue
+            _result = self.search(_type, search_term = _query_seach)
+            for _dict in _result:
+                for _unique_data in DataClassFactory.create_from_dict(**_dict):
+                    _unique_data_list.append(_unique_data)
+
+        return _unique_data_list
 
 
 

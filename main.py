@@ -5,7 +5,7 @@ from faker import Faker
 
 from userInterface import UserInteraction
 
-print("\n\n\n")
+print("\n\n")
 
 
 
