@@ -1,7 +1,10 @@
-from ..absDataTypes import UniqueNamedData
+from dataClasses.dataTypes import Category
+from dataClasses.absDataTypes import UniqueNamedData
 
-class Category(UniqueNamedData):
-    def __init__(self, id: str, name: str, description: str, *args) -> None:
+ # Used to mimic Category class
+
+class ForTestCategory(UniqueNamedData):
+    def __init__(self, id: str, name: str, description: str) -> None:
         super().__init__(id, name, description)
     
     def to_string(self) -> str:
@@ -12,7 +15,7 @@ class Category(UniqueNamedData):
             self.id,
             self.name,
             self.description,
-            type(self).__name__,
+            Category.__name__,
         ]
     
     @staticmethod

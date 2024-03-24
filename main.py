@@ -1,23 +1,43 @@
-from warehouse import WarehouseOOP
+from my_sql_database import ServerConnection, SQLHandler, MySQLServerCredentials
 from dataFaker import FakeWarehouseFiller
+from warehouse import WarhouseMySQL
+from faker import Faker
 
-from dataClasses.dataTypes import Category, Product, Transaction
-_wh = WarehouseOOP()
+from userInterface import UserInteraction
 
-FakeWarehouseFiller.fill_warehouse(_wh,100,100,100)
+print("\n\n\n")
 
-print(str(_wh.item_count) + " items in warehouse")
-print(str(_wh.object_count) + " objects in warehouse")
 
-_search_list = _wh.search_item("09")
-print(str(len(_search_list)) + " results")
-for _item in _search_list:
-    print(_item.to_string())
-    
-_category_list = [i for i in _search_list if isinstance(i, Category)]
-_product_list = [i for i in _search_list if isinstance(i, Product)]
-_transaction_list = [i for i in _search_list if isinstance(i, Transaction)]
 
-print(len(_category_list))
-print(len(_product_list))
-print(len(_transaction_list))
+
+
+_database_name = "spac_7"
+
+_credentials = MySQLServerCredentials(
+    "localhost",
+    "root",
+    "Kom12345",
+    3306
+)
+
+_categories = 100
+_products = 100
+_transactions = 100
+
+Faker.seed(0)
+
+
+
+
+mysql_server: ServerConnection = ServerConnection()
+mysql_server.connect_to_server(_credentials)
+
+sql_handler = SQLHandler(mysql_server.mysql_connection)
+warehouse = WarhouseMySQL(sql_handler, _database_name)
+
+FakeWarehouseFiller.fill_warehouse(warehouse, _categories, _products, _transactions)
+
+_interaction = UserInteraction(warehouse)
+_interaction.start_interation()
+
+mysql_server.close_connection()

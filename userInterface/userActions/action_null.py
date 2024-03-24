@@ -1,15 +1,15 @@
 from userInterface import UserInteractionData
 from .abs_user_action import AbsUserAction
 
-class UserActionCancel(AbsUserAction):
+class UserActionNull(AbsUserAction):
         
     @property
     def name(self) -> str:
-        return "Cancel"
+        return "Null"
 
     @property
     def required_state(self) -> str:
-        return ""
+        return "Null"
 
     @property
     def next_state(self) -> str:
@@ -17,8 +17,7 @@ class UserActionCancel(AbsUserAction):
     
     @property
     def sort_priority(self) -> int:
-        return 999999
+        return -1
     
     def action(self) -> None:
-        print("Closing program")
-        self.user_interaction_data.end_interaction = True
+        print("Performed null action")

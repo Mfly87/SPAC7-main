@@ -1,8 +1,13 @@
-from datetime import date, datetime
+from dataClasses.dataTypes import Category
 
-a = date(1900,1,1)
-print(a)
+from my_sql_database import QueryGenerator
 
-b = datetime(1,1,1)
+_a = Category("abc","abc","abc")
 
-print(b)
+_gen = QueryGenerator()
+
+
+
+print(_gen.generate_table_for_class(Category))
+print(_gen.generate_insert_many_query(Category))
+print(_gen.generate_search_query(Category))

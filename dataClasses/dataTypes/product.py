@@ -9,7 +9,7 @@ class Product(UniqueNamedData):
     _price: int = None
     _quantity: int = None
 
-    def __init__(self, id : str, name : str, description : str, category_id : str, price : int, quantity : int) -> None:
+    def __init__(self, id : str, name : str, description : str, category_id : str, price : int, quantity : int, *args) -> None:
         super().__init__(id, name, description)
 
         self.category_id = category_id
@@ -43,23 +43,35 @@ class Product(UniqueNamedData):
         if _value is not None:
             self._quantity = _value
 
-    def to_dict(self) -> dict[str,any]:
-        return {
-            "class": type(self).__name__,
-            "id": self.id,
-            "name": self.name,
-            "description": self.description,
-            "category_id": self.category_id,
-            "price": self.price,
-            "quantity": self.quantity,
-        }
-    
     def to_string(self) -> str:
-        return " | ".join([
+        _list = self.to_list()
+        _list[4] = "%i,-" % (_list[4])
+        _list[5] = "Qty: %i" % (_list[5])
+        return " | ".join(_list)
+    
+    def to_list(self) -> list[any]:
+        return [
             self.id,
             self.name,
             self.description,
             self.category_id,
-            str(self.price) + ",-kr.",
-            "Qty: " + str(self.quantity)
-        ])  
+            self.price,
+            self.quantity,
+            type(self).__name__,
+        ]
+    
+    @staticmethod
+    def get_headers() -> list[str]:
+        return [
+            "id",
+            "name",
+            "description",
+            "category_id",
+            "price",
+            "quantity",
+            "class"
+        ]
+    
+    @staticmethod
+    def get_types() -> list[type]:
+        return [str, str, str, str, int, int, str]

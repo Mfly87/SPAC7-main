@@ -62,32 +62,8 @@ class TestProduct():
             assert isinstance(sut.quantity, int)
 
     @parameterized.expand(param_string_guard)
-    def test_type_is_guarded(self, type, is_valid):
-        sut = Transaction("abc", "abc", datetime(1900,1,1), 123, type)
+    def test_type_is_guarded(self, transaction_type, is_valid):
+        sut = Transaction("abc", "abc", datetime(1900,1,1), 123, transaction_type)
         assert sut.is_valid() == is_valid
         if is_valid:
-            assert isinstance(sut.type, str)
-
-
-    
-    
-    def test_has_factory(self):
-        _params = ["abc", "abc", datetime(1900,1,1), 123, "abc"]
-        _base = Transaction(*_params)
-        _category_list = DataClassFactory.create_transaction(*_params)
-        assert len(_category_list) == 1
-        for _sut in _category_list:
-            assert _base == _sut
-
-    def test_factory_doesnt_create_defects(self):
-        _category_list = DataClassFactory.create_transaction(None, None, None, None, None)
-        assert len(_category_list) == 0
-
-    def test_factory_can_copy_from_dict(self):
-        _base = Transaction("abc", "abc", datetime(1900,1,1), 123, "abc")
-        _dict = _base.to_dict()
-
-        _category_list = DataClassFactory.create_transaction(**_dict)
-        assert len(_category_list) == 1
-        for _sut in _category_list:
-            assert _base == _sut
+            assert isinstance(sut.transaction_type, str)

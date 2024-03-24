@@ -27,10 +27,22 @@ class UniqueData(abc.ABC):
     @abc.abstractclassmethod
     def to_string(self) -> str:
         pass
-
+    
     @abc.abstractclassmethod
-    def to_dict(self) -> dict[str,any]:
+    def to_list(self) -> list[any]:
         pass
+
+    @abc.abstractstaticmethod
+    def get_headers() -> list[str]:
+        pass
+    
+    @abc.abstractstaticmethod
+    def get_types() -> list[type]:
+        pass
+
+    def to_dict(self) -> dict[str,any]:
+        return dict(zip(self.get_headers(), self.to_list()))
+
 
     def is_valid(self):
         _dict = self.to_dict()
@@ -40,19 +52,14 @@ class UniqueData(abc.ABC):
         return True
     
     def __eq__(self, __value: object) -> bool:
-        if type(self) is not type(__value):
+        if not isinstance(__value, type(self)):
             return False
         
-        _dict_a = self.to_dict()
-        _dict_b = __value.to_dict()
+        _list_a = self.to_list()
+        _list_b = __value.to_list()
 
-        if len(_dict_a.keys()) != len(_dict_b.keys()):
-            return False
-        
-        for _key in _dict_a:
-            if not _key in _dict_b:
+        for a, b in zip(_list_a, _list_b):
+            if a != b:
                 return False
-            if _dict_a[_key] != _dict_b[_key]:
-                return False
-        
+            
         return True

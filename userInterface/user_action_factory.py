@@ -1,8 +1,9 @@
-#from designPatterns.factoryPattern import AbsFactory
-
 from inspect import getmembers, isclass, isabstract
+
 from .userActions import AbsUserAction
 from . import userActions
+
+from .user_interaction_data import UserInteractionData
 
 class UserActionFactory():
     _actions = {}
@@ -17,22 +18,21 @@ class UserActionFactory():
             if isclass(_type) and issubclass(_type, AbsUserAction):
                 self._actions.update([[name, _type]])
     
-    def get_list_of_possible_actions(self) -> list[str]:
+    def get_all_possible_action_names(self) -> list[str]:
         _list = []
         for action_name in self._actions:
             _list.append(action_name)
         return _list
     
-    def create_list_of_all(self) -> list[AbsUserAction]:
-        _list = self.get_list_of_possible_actions()
-        return self.create(_list)
+    def get_all_actions(self, user_interaction_data: UserInteractionData) -> list[AbsUserAction]:
+        _list = self.get_all_possible_action_names()
+        return self.create(_list, user_interaction_data)
 
-    def create(self, action_name_list : list[str]):
+    def create(self, action_name_list : list[str], user_interaction_data: UserInteractionData):
         _list : list[AbsUserAction] = []
         for action_name in action_name_list:
             if action_name in self._actions:
-                action = self._actions[action_name]()
+                action = self._actions[action_name](user_interaction_data)
                 _list.append(action)
-
-        _list = sorted(_list, key = lambda x: x.list_priority)
+                
         return _list
