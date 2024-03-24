@@ -104,6 +104,7 @@ class QueryGenerator():
     @staticmethod
     def _get_column_definitions(class_type: UniqueData) -> str:
         _sql_definition_list = QueryGenerator._get_sql_definition_list(class_type)
+        _sql_definition_list[0] = "%s UNIQUE" % (_sql_definition_list[0])
         return ', '.join(_sql_definition_list)
         
     @staticmethod

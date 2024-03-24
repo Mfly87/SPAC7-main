@@ -1,9 +1,4 @@
 from my_sql_database import ServerConnection, SQLHandler, MySQLServerCredentials
-
-from dataClasses import UniqueData, DataClassFactory
-
-from dataClasses.dataTypes import Category, Product, Transaction
-
 from dataFaker import FakeWarehouseFiller
 from warehouse import WarhouseMySQL
 from faker import Faker
@@ -44,3 +39,5 @@ FakeWarehouseFiller.fill_warehouse(warehouse, _categories, _products, _transacti
 
 _interaction = UserInteraction(warehouse)
 _interaction.start_interation()
+
+mysql_server.close_connection()
