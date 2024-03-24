@@ -22,12 +22,11 @@ class ServerConnection(Singleton):
     def close_connection(self) -> None:
         if self.mysql_connection is None:
             return
-        
         try:
             self.mysql_connection.close()
             self._mysql_connection = None
         except Error as e:
-            print(f"An error occoured whilst attempt to close server connection: {e}")
+            print(f"An error occoured whilst closing the server connection: {e}")
             raise
 
     @property

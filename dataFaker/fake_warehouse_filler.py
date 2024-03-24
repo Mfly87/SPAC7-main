@@ -14,10 +14,8 @@ class FakeWarehouseFiller():
     @staticmethod
     def fill_warehouse(warehouse: AbsWarehouse, category_count: int, product_count: int, transaction_count: int):
         _dict = FakeWarehouseFiller.create_inventory_dict(category_count, product_count, transaction_count)
-        for _list in _dict.values():
-            for _unique_data in _list:
-                warehouse.update_item(_unique_data)
-        
+        warehouse.set_inventory(_dict)
+
     @staticmethod
     def create_inventory_dict(category_count: int, product_count: int, transaction_count: int) -> dict[str,list[UniqueData]]:
         _ret_dict = dict()
