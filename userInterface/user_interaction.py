@@ -1,6 +1,7 @@
 from .user_action_factory import UserActionFactory
 from .user_choice_selector import UserChoiceSelector
-from userActions import AbsUserAction
+from .user_interaction_data import UserInteractionData
+from .userActions.abs_user_action import AbsUserAction
 
 from warehouse import AbsWarehouse
 from .user_interaction_data import UserInteractionData
@@ -24,30 +25,35 @@ class UserInteraction():
     def start_interation(self):
         self.interaction_loop()
     
-    def interaction_loop(self):
-        _choice_factory = UserChoiceSelector()
-        
+    def interaction_loop(self):        
         while (True):
-            _action_list = self._get_usable_actions()
-            _action_to_name_func: Callable[[AbsUserAction],str] = lambda x : x.name
-            _index = _choice_factory.get_user_choice_from_objects(
-                _action_list, 
-                _action_to_name_func,
-                null_choice = "Cancel"
-                )
-            
-            if _index < 0:
+            _user_action = self._get_user_action()
+            if _user_action is None:
                 return
             
-            _action = _action_list[_index]
-            _action.execute_action(self.user_interaction_data)
+            _user_action.execute_action()
 
             if self.user_interaction_data.end_interaction:
                 return
 
-    def _get_usable_actions(self) -> list[AbsUserAction]:
-        _action_list = []
-        for _action in self.action_factory.get_all_actions():
-            if _action.is_usable(self.user_interaction_data):
+    def _get_user_action(self) -> AbsUserAction | None:
+        _action_list = self._get_action_list()
+        _action_to_name_func: Callable[[AbsUserAction],str] = lambda x : x.name
+        _index = UserChoiceSelector.get_user_choice_from_objects(
+            _action_list, 
+            _action_to_name_func
+            )
+        
+        if _index < 0:
+            return None
+        
+        return _action_list[_index]        
+
+    def _get_action_list(self) -> list[AbsUserAction]:
+        _action_list: list[AbsUserAction] = []
+        for _action in self.action_factory.get_all_actions(self.user_interaction_data):
+            if _action.is_usable():
                 _action_list.append(_action)
+        
+        _action_list = sorted(_action_list, key = lambda x: (x.sort_priority, x.name))
         return _action_list

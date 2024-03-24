@@ -3,6 +3,10 @@ from dataClasses.factory import DataClassFactory
 from my_sql_database import SQLHandler
 from dataClasses.absDataTypes import UniqueData, UniqueNamedData
 
+from dataClasses.dataTypes import Category
+
+from my_sql_database import QueryGenerator
+
 class WarhouseMySQL(AbsWarehouse):
 
     _prev_search_list: list[UniqueData] = []
@@ -51,8 +55,11 @@ class WarhouseMySQL(AbsWarehouse):
             for _dict in _result:
                 for _unique_data in DataClassFactory.create_from_dict(**_dict):
                     _unique_data_list.append(_unique_data)
+   
         self._prev_search_list = _unique_data_list
         return self.prev_search_list
+    
+
 
     def update_item(self, unique_data: UniqueData):
         _new_item = True
