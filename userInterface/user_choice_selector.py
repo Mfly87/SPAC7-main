@@ -1,7 +1,12 @@
+from typing import Callable, TypeVar
+
+T = TypeVar("T")
+
 class UserChoiceSelector():
     
-    def get_user_choice_from_objects(self, objects : list, obj_to_str_func, *, null_choice = "") -> int:
-        _name_list = []
+    @staticmethod
+    def get_user_choice_from_objects(objects: list[T], obj_to_str_func: Callable[[T],str], *, null_choice: str = "") -> int:
+        _name_list: list[str] = []
 
         if null_choice:
             _name_list.append(null_choice)
@@ -10,21 +15,19 @@ class UserChoiceSelector():
             _name = obj_to_str_func(_object)
             _name_list.append(_name)
         
-        _index = self.get_user_choice_from_name_list(_name_list)
+        _index = UserChoiceSelector.get_user_choice_from_name_list(_name_list)
         _offset = 1 if null_choice else 0
         return _index -_offset
 
-
-
-
-    def get_user_choice_from_name_list(self, choice_name_list : list[str]) -> int:
-        _index = self._get_choice_index(choice_name_list)
+    @staticmethod
+    def get_user_choice_from_name_list(choice_name_list : list[str]) -> int:
+        _index = UserChoiceSelector._get_choice_index(choice_name_list)
         print("You have selected: (" + str(_index) + ") " + choice_name_list[_index])
         print("")
         return _index
 
-
-    def _get_choice_index(self, choice_name_list : list[str]) -> int:
+    @staticmethod
+    def _get_choice_index(choice_name_list : list[str]) -> int:
         while (True):
             print("")
             print("You have the following options:")
@@ -42,14 +45,14 @@ class UserChoiceSelector():
                     if _input_lower == _choice.lower():
                         return i
                     
-                _value = self._attempt_to_get_an_int(_input)
+                _value = UserChoiceSelector._attempt_to_get_an_int(_input)
                 if 0 <= _value and _value < len(choice_name_list):
                     return _value
                 
                 print("Invalid selection.")
 
-
-    def _attempt_to_get_an_int(self, _input : str):
+    @staticmethod
+    def _attempt_to_get_an_int(_input : str):
         try:
             _value = int(_input)
         except:

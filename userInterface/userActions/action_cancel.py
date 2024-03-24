@@ -4,7 +4,7 @@ class UserActionCancel(AbsUserAction):
 
     @property
     def name(self) -> str:
-        return "Cancel"
+        return "Close"
     
     @property
     def list_priority(self) -> int:
@@ -14,5 +14,5 @@ class UserActionCancel(AbsUserAction):
         return True
 
     def execute_action(self, _interaction_dict : dict) -> None:
-        print("Cancelled!")
+        print("Closing program")
         _interaction_dict["end_interaction"] = True

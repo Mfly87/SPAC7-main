@@ -1,6 +1,5 @@
-#from designPatterns.factoryPattern import AbsFactory
-
 from inspect import getmembers, isclass, isabstract
+
 from .userActions import AbsUserAction
 from . import userActions
 
@@ -23,7 +22,7 @@ class UserActionFactory():
             _list.append(action_name)
         return _list
     
-    def create_list_of_all(self) -> list[AbsUserAction]:
+    def get_all_actions(self) -> list[AbsUserAction]:
         _list = self.get_list_of_possible_actions()
         return self.create(_list)
 
