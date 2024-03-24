@@ -80,11 +80,11 @@ class QueryGenerator():
         
     @staticmethod
     def _get_table_name(class_type: type | UniqueData) -> str:
-        if isinstance(class_type, str):
-            return class_type
-        if not isinstance(class_type, type):
-            class_type = type(class_type)
-        return class_type.__name__.lower()
+        if not isinstance(class_type, str):
+            if not isinstance(class_type, type):
+                class_type = class_type.__class__
+            class_type = class_type.__name__
+        return str(class_type).lower()
         
     @staticmethod
     def _get_column_names(class_type: UniqueData):

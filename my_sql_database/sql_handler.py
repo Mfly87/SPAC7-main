@@ -1,14 +1,25 @@
 from dataClasses import UniqueData
-from dataClasses.dataTypes import Category
+from dataClasses import dataTypes
 from .query_generator import QueryGenerator
 
+from inspect import getmembers, isclass, isabstract
 from mysql.connector import MySQLConnection, Error
 class SQLHandler:
 
     _current_database: str = ""
+    _table_classes: dict[str, UniqueData | type] = dict()
 
     def __init__(self, database_connector: MySQLConnection) -> None:
         self._database_connector: MySQLConnection = database_connector
+        self._update_table_classes()
+    
+    def _update_table_classes(self):
+        self._table_classes.clear()
+        classes = getmembers(dataTypes, lambda m: isclass(m) and not isabstract(m) )
+        for name, _type in classes:
+            if isclass(_type) and issubclass(_type, UniqueData):
+                _table_name = QueryGenerator._get_table_name(_type)
+                self._table_classes.update([[_table_name, _type]])
 
     @property
     def database_connector(self) -> MySQLConnection:
@@ -17,6 +28,23 @@ class SQLHandler:
     @property
     def current_database(self):
         return self._current_database
+    
+    @property
+    def table_classes(self) -> dict[str, UniqueData | type]:
+        return self._table_classes
+    
+
+
+
+
+
+    def get_table_types(self) -> list[UniqueData | type]:
+        _name_list = self.get_table_names()
+        _type_list = []
+        for _name in _name_list:
+            if _name in self.table_classes.keys():
+                _type_list.append(self.table_classes[_name])
+        return _type_list
 
     def get_table_names(self) -> list[str]:
         _query = "SHOW TABLES"
@@ -56,7 +84,6 @@ class SQLHandler:
 
     def search(self, class_type: UniqueData | type,*, search_term: str = ""):
         _query = QueryGenerator().generate_search_query(class_type, search_term = search_term)
-        print(_query)
         return self.execute_fetch_querty(_query)
         
     def update_item(self, unique_data: UniqueData):
