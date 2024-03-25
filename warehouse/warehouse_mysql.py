@@ -40,20 +40,22 @@ class WarhouseMySQL(AbsWarehouse):
         for _unique_data_list in inventory_dict.values():
             self.mysql_handler.create_table(_unique_data_list)
 
-    def search_all_tables_of_subclass(self, subclass: T, _query_specifier: str) -> list[T]:
+    def search_all_tables_of_subclass(self, subclass: UniqueData | type, _query_specifier: str) -> list[UniqueData]:
         _class_list = []
         for _type in self.mysql_handler.get_table_types():
             if issubclass(_type, subclass):
                 _class_list.append(_type)
         return self.search_multiple_tables(_class_list, _query_specifier)
 
-
-    def search_multiple_tables(self, _class_list: list, _query_specifier: str) -> list[UniqueData]:
-        _unique_data_list: list[T] = []
+    def search_multiple_tables(self, _class_list: list[UniqueData | type], _query_specifier: str) -> list[UniqueData]:
+        _unique_data_list: list[UniqueData] = []
         for _type in _class_list:
-            _result = self.mysql_handler.search(_type, search_term = _query_specifier)
-            _unique_data_list += self._unpack_search_result_to_unique_data(_result)
+            _unique_data_list += self.search_table(_type, _query_specifier)
         return _unique_data_list
+    
+    def search_table(self, _type: UniqueData | type, _query_specifier: str) -> list[UniqueData]:
+        _result = self.mysql_handler.search(_type, search_term = _query_specifier)
+        return self._unpack_search_result_to_unique_data(_result)
 
     def _unpack_search_result_to_unique_data(self, search_result: list[dict]) -> list[UniqueData]:
         _unique_data_list: list[UniqueData] = []
