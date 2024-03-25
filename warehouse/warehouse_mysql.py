@@ -2,7 +2,7 @@ from .abs_warehouse import AbsWarehouse
 from dataClasses.factory import DataClassFactory
 from my_sql_database import SQLHandler
 from dataClasses.absDataTypes import UniqueData
-
+from mysql.connector import Error
 from typing import TypeVar
 T = TypeVar("T")
 
@@ -58,8 +58,13 @@ class WarhouseMySQL(AbsWarehouse):
         return _unique_data_list
     
     def search_table(self, type: UniqueData | type, query_specifier: str) -> list[UniqueData]:
-        _result = self.mysql_handler.search(type, search_term = query_specifier)
-        return self._unpack_unique_data_dict_to_object(_result)
+        try:
+            _result = self.mysql_handler.search(type, search_term = query_specifier)
+            return self._unpack_unique_data_dict_to_object(_result)
+        except Error:
+            return []
+
+        
         
 
 

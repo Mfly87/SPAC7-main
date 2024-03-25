@@ -1,8 +1,7 @@
-from .abs_user_action import AbsUserAction
-from dataClasses.absDataTypes import UniqueNamedData
-from my_sql_database import SearchQuerySpecifier
+from .abs_user_search_action import AbsUserSearchAction
+from dataClasses import UniqueData
 
-class UserActionSearchDirectSQL(AbsUserAction):
+class UserActionSearchDirectSQL(AbsUserSearchAction):
 
     @property
     def name(self) -> str:
@@ -12,29 +11,9 @@ class UserActionSearchDirectSQL(AbsUserAction):
     def sort_priority(self) -> int:
         return 950
 
-    def is_usable(self) -> bool:
-        return self.uid.state == "search"
-    
     def execute_action(self) -> None:
-        self.uid.state = ""
-
-        while(True):
-            print("Please enter your search")
-            print("The MySQL wildcards _ and % will be used.")
-            print("")
-
-            _search_string = input("WHERE ")
-            _search_string.strip()
-
-            _unique_data_list = self.uid.warehouse.search_all_tables(_search_string)
-            self.uid.prev_search_result = _unique_data_list
-            
-            self.uid.print_search_report()
-
-            if not _unique_data_list:
-                _retry = "y" in input("Do you wish to perform another search (y/n)?: ").lower()
-                if _retry:
-                    print("")
-                    continue
-            break
-                
+        self._search_action(
+            "WHERE",
+            lambda x : "WHERE %s" % (x),
+            UniqueData
+        )
