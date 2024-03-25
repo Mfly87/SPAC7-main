@@ -27,15 +27,30 @@ class UserActioNSearchColumnValue(AbsUserAction):
         _class_type_list = self.uid.warehouse.mysql_handler.get_table_types()
         _class_type = _class_type_list[_class_type_index]
 
-        _search_affector = self.get_field_search_affector(_class_type)
-
+        _search_affector = self.get_search_accector(_class_type)
+            
         _query_specifier = "WHERE " + _search_affector
+        print(_query_specifier)
         
         _unique_data_list = self.uid.warehouse.search_all_tables_of_subclass(_class_type, _query_specifier)
         self.uid.prev_search_result = _unique_data_list
         
         self.uid.print_search_report()
 
+    def get_search_accector(self, _class_type):
+        _search_affector = ""
+        while True:
+            _search_affector += self.get_field_search_affector(_class_type)
+
+            print ("Do you wish to add another specification?")
+            _union_descriptions = list(self.unions.values())
+            _union_index = UserChoiceSelector.get_user_choice_from_name_list(_union_descriptions)
+            
+            if _union_index == 0:
+                return _search_affector
+
+            _union = list(self.unions.keys())[_union_index]
+            _search_affector += _union + " "
 
     def get_field_search_affector(self, _class_type):
 
@@ -77,4 +92,12 @@ class UserActioNSearchColumnValue(AbsUserAction):
             #"BETWEEN": "Between a certain range",
             #"LIKE": "Search for a pattern",
             #"IN": To specify multiple possible values for a column,
+        }
+    
+    @property
+    def unions(self) -> dict[str,str]:
+        return {
+            "": "No, complete search",
+            "OR": "Yes, using the 'OR' opperation",
+            "AND": "Yes, using the 'AND' opperation",
         }
