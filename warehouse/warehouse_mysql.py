@@ -50,15 +50,17 @@ class WarhouseMySQL(AbsWarehouse):
 
     def search_multiple_tables(self, _class_list: list, _query_specifier: str) -> list[UniqueData]:
         _unique_data_list: list[T] = []
-
         for _type in _class_list:
             _result = self.mysql_handler.search(_type, search_term = _query_specifier)
-            for _dict in _result:
-                for _unique_data in DataClassFactory.create_from_dict(**_dict):
-                    _unique_data_list.append(_unique_data)
-
+            _unique_data_list += self._unpack_search_result_to_unique_data(_result)
         return _unique_data_list
 
+    def _unpack_search_result_to_unique_data(self, search_result: list[dict]) -> list[UniqueData]:
+        _unique_data_list: list[UniqueData] = []
+        for _dict in search_result:
+            for _unique_data in DataClassFactory.create_from_dict(**_dict):
+                _unique_data_list.append(_unique_data)
+        return _unique_data_list
 
     def get_items(self):
         pass
