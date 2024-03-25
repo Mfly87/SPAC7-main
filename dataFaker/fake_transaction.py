@@ -16,7 +16,7 @@ class FakeTransaction(AbsFaker):
     
     def generate_fake_item(self, product : Product) -> list[Transaction]:
         _factory = DataClassFactory()
-        _tansaction_amount = self._create_non_zero_transaction_amount()
+        _tansaction_amount = self._create_non_zero_transaction_amount(product)
         _params = [
             self.get_next_id(),
             product.id,
@@ -26,9 +26,9 @@ class FakeTransaction(AbsFaker):
         ]
         return _factory.create_transaction(*_params)
     
-    def _create_non_zero_transaction_amount(self) -> int:
-        _value = 0
-        while (_value == 0):
+    def _create_non_zero_transaction_amount(self, product : Product) -> int:
+        _prev_value = product.quantity
+        while product.quantity == _prev_value:
             for _ in range(3):
-                _value += self._create_int(-3,3)
-        return _value
+                product.quantity += self._create_int(-3,3)
+        return product.quantity - _prev_value

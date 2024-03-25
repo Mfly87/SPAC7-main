@@ -41,23 +41,28 @@ class WarhouseMySQL(AbsWarehouse):
         for _unique_data_list in inventory_dict.values():
             self.mysql_handler.create_table(_unique_data_list)
 
-    def search_all_tables(self, query_specifier: str) -> list[UniqueData]:
+    def search_all_tables(self, query_specifier: str, column_list: list[str] = []) -> list[UniqueData]:
         return self.search_all_tables_of_subclass(UniqueData, query_specifier)
 
-    def search_all_tables_of_subclass(self, subclass: UniqueData | type, query_specifier: str) -> list[UniqueData]:
+    def search_all_tables_of_subclass(self, subclass: UniqueData | type, query_specifier: str, column_list: list[str] = []) -> list[UniqueData]:
         _class_list = []
         for _type in self.mysql_handler.get_table_types():
             if issubclass(_type, subclass):
                 _class_list.append(_type)
         return self.search_multiple_tables(_class_list, query_specifier)
 
-    def search_multiple_tables(self, class_list: list[UniqueData | type], query_specifier: str) -> list[UniqueData]:
+    def search_multiple_tables(self, class_list: list[UniqueData | type], query_specifier: str, column_list: list[str] = []) -> list[UniqueData]:
         _unique_data_list: list[UniqueData] = []
         for _type in class_list:
             _unique_data_list += self.search_table(_type, query_specifier)
         return _unique_data_list
     
-    def search_table(self, type: UniqueData | type, query_specifier: str) -> list[UniqueData]:
+    def search_table(self, type: UniqueData | type, query_specifier: str, column_list: list[str] = []) -> list[UniqueData]:        
+        # Skip tables that doesn't have the columns we are searching for
+        for _column in column_list:
+            if _column not in type.to_list():
+                return []
+
         try:
             _result = self.mysql_handler.search(type, search_term = query_specifier)
             return self._unpack_unique_data_dict_to_object(_result)

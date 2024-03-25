@@ -9,7 +9,7 @@ class Product(UniqueNamedData):
     _price: int = None
     _quantity: int = None
 
-    def __init__(self, id : str, name : str, description : str, category_id : str, price : int, quantity : int, *args) -> None:
+    def __init__(self, id : str, name : str, description : str, category_id : str, price : int, quantity : int, clss: str = None) -> None:
         super().__init__(id, name, description)
 
         self.category_id = category_id
