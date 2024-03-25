@@ -35,7 +35,7 @@ class WarehouseOOP(AbsWarehouse):
 
 
 
-    def search_item(self, search_string : str) -> list[UniqueData]:
+    def search_table(self, search_string : str) -> list[UniqueData]:
         _item_list: list[UniqueData] = []
         for _item in self._storage.values():
             if WarehouseOOP.matches_search(_item, search_string):

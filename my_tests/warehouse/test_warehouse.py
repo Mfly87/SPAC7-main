@@ -17,7 +17,7 @@ class TestWarehouseFiller():
         wh = WarehouseOOP()
         FakeWarehouseFiller.fill_warehouse(wh, _category_count, _product_count, _transaction_count)
 
-        _search_list = wh.search_item("0009")
+        _search_list = wh.search_table("0009")
         
         _category_list = [i for i in _search_list if isinstance(i, Category)]
         _product_list = [i for i in _search_list if isinstance(i, Product)]

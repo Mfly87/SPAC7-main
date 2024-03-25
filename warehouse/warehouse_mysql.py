@@ -40,38 +40,37 @@ class WarhouseMySQL(AbsWarehouse):
         for _unique_data_list in inventory_dict.values():
             self.mysql_handler.create_table(_unique_data_list)
 
-    def search_all_tables_of_subclass(self, subclass: UniqueData | type, _query_specifier: str) -> list[UniqueData]:
+    def search_all_tables_of_subclass(self, subclass: UniqueData | type, query_specifier: str) -> list[UniqueData]:
         _class_list = []
         for _type in self.mysql_handler.get_table_types():
             if issubclass(_type, subclass):
                 _class_list.append(_type)
-        return self.search_multiple_tables(_class_list, _query_specifier)
+        return self.search_multiple_tables(_class_list, query_specifier)
 
-    def search_multiple_tables(self, _class_list: list[UniqueData | type], _query_specifier: str) -> list[UniqueData]:
+    def search_multiple_tables(self, class_list: list[UniqueData | type], query_specifier: str) -> list[UniqueData]:
         _unique_data_list: list[UniqueData] = []
-        for _type in _class_list:
-            _unique_data_list += self.search_table(_type, _query_specifier)
+        for _type in class_list:
+            _unique_data_list += self.search_table(_type, query_specifier)
         return _unique_data_list
     
-    def search_table(self, _type: UniqueData | type, _query_specifier: str) -> list[UniqueData]:
-        _result = self.mysql_handler.search(_type, search_term = _query_specifier)
+    def search_table(self, type: UniqueData | type, query_specifier: str) -> list[UniqueData]:
+        _result = self.mysql_handler.search(type, search_term = query_specifier)
         return self._unpack_unique_data_dict_to_object(_result)
+        
 
-    def get_items(self):
-        pass
 
-    def search_item(self, search_string: str) -> list[UniqueData]:
-        pass
+
+        
     
-    def update_item(self, unique_data: UniqueData, change_dict):
+    def update_item(self, unique_data: UniqueData, change_dict) -> list[UniqueData]:
         _dict = unique_data.to_dict()
         _dict.update(change_dict)
 
-        _unique_data_list = self._unpack_unique_data_dict_to_object([_dict])
-        for _unique_data in _unique_data_list:
+        _updated_unique_data_list = self._unpack_unique_data_dict_to_object([_dict])
+        for _unique_data in _updated_unique_data_list:
             self.mysql_handler.update_item(_unique_data)
         
-        return _unique_data_list
+        return _updated_unique_data_list
     
 
 
@@ -83,6 +82,11 @@ class WarhouseMySQL(AbsWarehouse):
                 _unique_data_list.append(_unique_data)
         return _unique_data_list
         
-
+    def search_item(self):
+        pass
+    
     def delete_item(self):
+        pass
+
+    def get_items(self):
         pass
