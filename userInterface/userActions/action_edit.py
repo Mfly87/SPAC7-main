@@ -1,5 +1,4 @@
-from dataClasses import UniqueData, DataClassFactory
-from userInterface import UserInteractionData
+from dataClasses import DataClassFactory
 from .abs_user_action import AbsUserAction
 
 from userInterface.user_choice_selector import UserChoiceSelector

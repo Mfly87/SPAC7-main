@@ -1,8 +1,4 @@
-from userInterface import UserInteractionData
 from .abs_user_action import AbsUserAction
-
-from dataClasses.absDataTypes import UniqueData, UniqueNamedData
-from dataClasses import DataClassFactory
 
 class UserActionSearchKeyword(AbsUserAction):
 

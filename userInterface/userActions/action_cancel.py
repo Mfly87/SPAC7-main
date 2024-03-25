@@ -1,11 +1,10 @@
-from userInterface import UserInteractionData
 from .abs_user_action import AbsUserAction
 
 class UserActionCancel(AbsUserAction):
         
     @property
     def name(self) -> str:
-        return "Cancel"
+        return "Close"
     
     @property
     def sort_priority(self) -> int:

@@ -1,4 +1,3 @@
-from userInterface import UserInteractionData
 from .abs_user_action import AbsUserAction
 
 class UserActionNull(AbsUserAction):

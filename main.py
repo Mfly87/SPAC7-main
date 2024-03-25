@@ -10,7 +10,6 @@ print("\n\n")
 
 
 
-
 _database_name = "spac_7"
 
 _credentials = MySQLServerCredentials(
