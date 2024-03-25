@@ -1,11 +1,10 @@
 from .abs_warehouse import AbsWarehouse
 from dataClasses.factory import DataClassFactory
 from my_sql_database import SQLHandler
-from dataClasses.absDataTypes import UniqueData, UniqueNamedData
+from dataClasses.absDataTypes import UniqueData
 
-from dataClasses.dataTypes import Category
-
-from my_sql_database import QueryGenerator
+from typing import TypeVar
+T = TypeVar("T")
 
 class WarhouseMySQL(AbsWarehouse):
 
@@ -40,6 +39,19 @@ class WarhouseMySQL(AbsWarehouse):
 
         for _unique_data_list in inventory_dict.values():
             self.mysql_handler.create_table(_unique_data_list)
+
+    def search_all_tables_of_subclass(self, subclass: T, _query_specifier: str) -> list[T]:
+        _unique_data_list: list[T] = []
+
+        for _type in self.mysql_handler.get_table_types():
+            if not issubclass(_type, subclass):
+                continue
+            _result = self.mysql_handler.search(_type, search_term = _query_specifier)
+            for _dict in _result:
+                for _unique_data in DataClassFactory.create_from_dict(**_dict):
+                    _unique_data_list.append(_unique_data)
+
+        return _unique_data_list
 
 
     def get_items(self):

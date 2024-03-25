@@ -1,5 +1,5 @@
 from typing import Callable, TypeVar
-
+import re
 T = TypeVar("T")
 
 class UserChoiceSelector():
@@ -32,33 +32,35 @@ class UserChoiceSelector():
 
     @staticmethod
     def _get_choice_index(choice_name_list : list[str]) -> int:
-        while (True):
+        print("")
+        print("You have the following options:")
+        UserChoiceSelector.print_choices(choice_name_list)
+        
+        while(True):
             print("")
-            print("You have the following options:")
+            _input = input("Please make a selection: ")
+            _input = _input.strip()
 
+            _value = UserChoiceSelector._attempt_to_get_an_int(_input)
+            if 0 <= _value and _value < len(choice_name_list):
+                return _value
+            
+            _input_lower = _input.lower()
             for i, _choice in enumerate(choice_name_list):
-                print("(" + str(i) + ") " + _choice)
-                if i % 3 == 2:
-                    print("")
-
-            while(True):
-                print("")
-                _input = input("Please make a selection: ")
-                _input = _input.strip()
-
-                _input_lower = _input.lower()
-                for i, _choice in enumerate(choice_name_list):
-                    if _input_lower == _choice.lower():
-                        return i
-                    
-                _value = UserChoiceSelector._attempt_to_get_an_int(_input)
-                if 0 <= _value and _value < len(choice_name_list):
-                    return _value
-                
-                print("Invalid selection.")
+                if re.search(_input_lower, _choice, re.IGNORECASE):
+                    return i
+            
+            print("Invalid selection.")
 
     @staticmethod
-    def _attempt_to_get_an_int(_input : str):
+    def print_choices(choice_name_list: list[str]) -> None:
+        for i, _choice in enumerate(choice_name_list):
+            print("(" + str(i) + ") " + _choice)
+            if i % 3 == 2:
+                print("")
+
+    @staticmethod
+    def _attempt_to_get_an_int(_input: str):
         try:
             _value = int(_input)
         except:

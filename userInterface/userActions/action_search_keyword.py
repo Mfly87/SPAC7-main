@@ -1,4 +1,6 @@
 from .abs_user_action import AbsUserAction
+from dataClasses.absDataTypes import UniqueNamedData
+from my_sql_database import SearchQuerySpecifier
 
 class UserActionSearchKeyword(AbsUserAction):
 
@@ -24,7 +26,8 @@ class UserActionSearchKeyword(AbsUserAction):
             _search_string = input("Keyword: ")
             _search_string.strip()
             
-            _unique_data_list = self.uid.warehouse.mysql_handler.search_keyword(_search_string)
+            _query_specifier = SearchQuerySpecifier.get_keyword_specifier(_search_string)
+            _unique_data_list = self.uid.warehouse.search_all_tables_of_subclass(UniqueNamedData, _query_specifier)
             self.uid.prev_search_result = _unique_data_list
             
             self.uid.print_search_report()

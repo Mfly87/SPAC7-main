@@ -4,6 +4,8 @@ from .query_generator import QueryGenerator
 
 from inspect import getmembers, isclass, isabstract
 from mysql.connector import MySQLConnection, Error
+
+
 class SQLHandler:
 
     _current_database: str = ""
@@ -89,23 +91,6 @@ class SQLHandler:
     def update_item(self, unique_data: UniqueData):
         _query = QueryGenerator.generate_update_query(unique_data)
         self.execute_querty(_query)
-
-
-    def search_keyword(self, _search_string: str) -> list[UniqueNamedData]:
-        _query_seach = f"WHERE name LIKE '%{_search_string}%' OR description LIKE '%{_search_string}%'"
-        _unique_data_list: list[UniqueNamedData] = []
-
-        for _type in self.get_table_types():
-            if not issubclass(_type, UniqueNamedData):
-                continue
-            _result = self.search(_type, search_term = _query_seach)
-            for _dict in _result:
-                for _unique_data in DataClassFactory.create_from_dict(**_dict):
-                    _unique_data_list.append(_unique_data)
-
-        return _unique_data_list
-
-
 
     def execute_many_querty(self, _query: str, _unique_data_list: list[UniqueData]) -> bool:
         try:

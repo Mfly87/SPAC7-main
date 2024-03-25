@@ -7,7 +7,7 @@ class UserActionEdit(AbsUserAction):
         
     @property
     def name(self) -> str:
-        return "Edit an entry"
+        return "Edit a search entry"
     
     @property
     def sort_priority(self) -> int:
