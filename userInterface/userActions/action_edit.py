@@ -15,7 +15,7 @@ class UserActionEdit(AbsUserAction):
         return 1
 
     def is_usable(self) -> bool:
-        return 0 < len(self.uid.prev_search_result)
+        return self.uid.state == "" and 0 < len(self.uid.prev_search_result)
     
     def execute_action(self) -> None:
         self.uid.state = ""

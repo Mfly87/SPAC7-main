@@ -15,7 +15,7 @@ class UserActionSearchKeyword(AbsUserAction):
         return 0
 
     def is_usable(self) -> bool:
-        return self.uid.state == "search" or self.uid.state == "search_keyword"
+        return self.uid.state == "search"
     
     def execute_action(self) -> None:
         self.uid.state = ""
