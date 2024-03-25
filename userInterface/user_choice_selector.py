@@ -55,9 +55,9 @@ class UserChoiceSelector():
     @staticmethod
     def print_choices(choice_name_list: list[str]) -> None:
         for i, _choice in enumerate(choice_name_list):
-            print("(" + str(i) + ") " + _choice)
-            if i % 3 == 2:
+            if 0 < i and i % 3 == 0:
                 print("")
+            print("(" + str(i) + ") " + _choice)
 
     @staticmethod
     def _attempt_to_get_an_int(_input: str):

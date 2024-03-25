@@ -26,7 +26,7 @@ _transactions = 100
 Faker.seed(0)
 
 
-
+0
 mysql_server: ServerConnection = ServerConnection()
 mysql_server.connect_to_server(_credentials)
 

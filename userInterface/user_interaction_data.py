@@ -29,9 +29,9 @@ class UserInteractionData():
             print("")
             _mini_list = self.prev_search_result[0:self.max_search_results]
             for i, _unique_data in enumerate(_mini_list):
-                print(_unique_data.to_string())
-                if i % 3 == 2:
+                if 0 < i and i % 3 == 0:
                     print("")
+                print(_unique_data.to_string())
 
             _remaining = len(self.prev_search_result) - len(_mini_list)
             if 0 < _remaining:

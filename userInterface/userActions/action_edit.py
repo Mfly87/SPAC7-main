@@ -29,19 +29,10 @@ class UserActionEdit(AbsUserAction):
         _unique_data = _unique_data_list[_item_index]
 
         print("Please select which field you wish to edit:")
+        _field_name, _field_index = self._get_unique_data_field_choice(_unique_data)
 
-        _field_list = _unique_data.get_headers()
-
-        # Removing one from either end to avoid the ID and Class fields
-        _field_list = _field_list[1:len(_field_list)-1]
-
-        _field_index = UserChoiceSelector.get_user_choice_from_name_list(_field_list)
-        _field_name = _field_list[_field_index]
-
-        # We remove 1 initially to avoid the ID field
-        _field_index += 1
-
-        _old_value = _unique_data.to_list()[_field_index]
+        _old_value_list = _unique_data.to_list()
+        _old_value = _old_value_list[_field_index]
 
         while(True):
             print("The current value of '%s' is: %s" % (_field_name, _old_value))
