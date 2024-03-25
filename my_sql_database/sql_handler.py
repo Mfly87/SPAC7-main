@@ -1,9 +1,11 @@
-from dataClasses import UniqueData
-from dataClasses import dataTypes
+from dataClasses import dataTypes, DataClassFactory
+from dataClasses.absDataTypes import UniqueData, UniqueNamedData
 from .query_generator import QueryGenerator
 
 from inspect import getmembers, isclass, isabstract
 from mysql.connector import MySQLConnection, Error
+
+
 class SQLHandler:
 
     _current_database: str = ""
@@ -89,9 +91,6 @@ class SQLHandler:
     def update_item(self, unique_data: UniqueData):
         _query = QueryGenerator.generate_update_query(unique_data)
         self.execute_querty(_query)
-
-
-
 
     def execute_many_querty(self, _query: str, _unique_data_list: list[UniqueData]) -> bool:
         try:

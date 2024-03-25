@@ -5,8 +5,7 @@ from faker import Faker
 
 from userInterface import UserInteraction
 
-print("\n\n\n")
-
+print("\n\n")
 
 
 
@@ -27,8 +26,7 @@ _transactions = 100
 Faker.seed(0)
 
 
-
-
+0
 mysql_server: ServerConnection = ServerConnection()
 mysql_server.connect_to_server(_credentials)
 

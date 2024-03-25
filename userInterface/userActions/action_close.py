@@ -1,17 +1,19 @@
 from .abs_user_action import AbsUserAction
 
-class UserActionNull(AbsUserAction):
+class UserActionClose(AbsUserAction):
         
     @property
     def name(self) -> str:
-        return "Null"
+        return "Close program"
     
     @property
     def sort_priority(self) -> int:
-        return -1
+        return 999999
 
     def is_usable(self) -> bool:
-        return False
+        return self.uid.state == ""
     
     def execute_action(self) -> None:
-        pass
+        print("Closing program")
+        print("\n\n")
+        self.uid.end_interaction = True

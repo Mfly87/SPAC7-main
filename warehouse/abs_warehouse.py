@@ -12,7 +12,7 @@ class AbsWarehouse(abc.ABC):
         pass
 
     @abc.abstractclassmethod
-    def search_item(self) -> list[UniqueData]:
+    def search_table(self) -> list[UniqueData]:
         pass
 
     @abc.abstractclassmethod
