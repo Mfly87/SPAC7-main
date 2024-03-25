@@ -16,6 +16,7 @@ class WarhouseMySQL(AbsWarehouse):
 
         # Technically this could be done before each function for safety, but I'm not sure if that's normal
         self.mysql_handler.connect_to_database(self.database_name)
+    
 
 
     @property
@@ -39,6 +40,9 @@ class WarhouseMySQL(AbsWarehouse):
 
         for _unique_data_list in inventory_dict.values():
             self.mysql_handler.create_table(_unique_data_list)
+
+    def search_all_tables(self, query_specifier: str) -> list[UniqueData]:
+        return self.search_all_tables_of_subclass(UniqueData, query_specifier)
 
     def search_all_tables_of_subclass(self, subclass: UniqueData | type, query_specifier: str) -> list[UniqueData]:
         _class_list = []

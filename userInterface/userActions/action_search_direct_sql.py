@@ -2,15 +2,15 @@ from .abs_user_action import AbsUserAction
 from dataClasses.absDataTypes import UniqueNamedData
 from my_sql_database import SearchQuerySpecifier
 
-class UserActionSearchKeyword(AbsUserAction):
+class UserActionSearchDirectSQL(AbsUserAction):
 
     @property
     def name(self) -> str:
-        return "Search names and descriptions using keyword"
+        return "Search using direct sql"
     
     @property
     def sort_priority(self) -> int:
-        return 0
+        return 950
 
     def is_usable(self) -> bool:
         return self.uid.state == "search"
@@ -23,17 +23,16 @@ class UserActionSearchKeyword(AbsUserAction):
             print("The MySQL wildcards _ and % will be used.")
             print("")
 
-            _search_string = input("Keyword: ")
+            _search_string = input("WHERE ")
             _search_string.strip()
-            
-            _query_specifier = SearchQuerySpecifier.get_keyword_specifier(_search_string)
-            _unique_data_list = self.uid.warehouse.search_all_tables_of_subclass(UniqueNamedData, _query_specifier)
+
+            _unique_data_list = self.uid.warehouse.search_all_tables(_search_string)
             self.uid.prev_search_result = _unique_data_list
             
             self.uid.print_search_report()
 
             if not _unique_data_list:
-                _retry = "y" in input("Do you wish to search for another keyword (y/n)?: ").lower()
+                _retry = "y" in input("Do you wish to perform another search (y/n)?: ").lower()
                 if _retry:
                     print("")
                     continue

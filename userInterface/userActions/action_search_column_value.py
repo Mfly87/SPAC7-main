@@ -8,11 +8,11 @@ class UserActioNSearchColumnValue(AbsUserAction):
 
     @property
     def name(self) -> str:
-        return "Search using column values"
+        return "Search using sql query builder"
     
     @property
     def sort_priority(self) -> int:
-        return 1
+        return 999
 
     def is_usable(self) -> bool:
         return self.uid.state == "search"
