@@ -41,11 +41,17 @@ class WarhouseMySQL(AbsWarehouse):
             self.mysql_handler.create_table(_unique_data_list)
 
     def search_all_tables_of_subclass(self, subclass: T, _query_specifier: str) -> list[T]:
+        _class_list = []
+        for _type in self.mysql_handler.get_table_types():
+            if issubclass(_type, subclass):
+                _class_list.append(_type)
+        return self.search_multiple_tables(_class_list, _query_specifier)
+
+
+    def search_multiple_tables(self, _class_list: list, _query_specifier: str) -> list[UniqueData]:
         _unique_data_list: list[T] = []
 
-        for _type in self.mysql_handler.get_table_types():
-            if not issubclass(_type, subclass):
-                continue
+        for _type in _class_list:
             _result = self.mysql_handler.search(_type, search_term = _query_specifier)
             for _dict in _result:
                 for _unique_data in DataClassFactory.create_from_dict(**_dict):
