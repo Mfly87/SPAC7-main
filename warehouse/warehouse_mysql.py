@@ -76,15 +76,8 @@ class WarhouseMySQL(AbsWarehouse):
 
         
     
-    def update_item(self, unique_data: UniqueData, change_dict) -> list[UniqueData]:
-        _dict = unique_data.to_dict()
-        _dict.update(change_dict)
-
-        _updated_unique_data_list = self._unpack_unique_data_dict_to_object([_dict])
-        for _unique_data in _updated_unique_data_list:
-            self.mysql_handler.update_item(_unique_data)
-        
-        return _updated_unique_data_list
+    def update_item(self, unique_data: UniqueData) -> list[UniqueData]:
+        self.mysql_handler.update_item(unique_data)
     
 
 

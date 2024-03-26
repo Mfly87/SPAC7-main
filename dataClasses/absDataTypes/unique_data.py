@@ -9,7 +9,10 @@ class UniqueData(abc.ABC):
 
     def __init__(self, id : str) -> None:
         super().__init__()
-        self.id = id
+
+        _value = str_non_empty(id)
+        if _value is not None:
+            self._id = _value
 
     @property
     def date_format(self) -> str:
@@ -20,31 +23,43 @@ class UniqueData(abc.ABC):
         return self._id
     @id.setter
     def id(self, value) -> None:
-        _value = str_non_empty(value)
-        if _value is not None:
-            self._id = _value
+        '''This parameter can not be changed, but is still exposed to prevent generic functions from crashing'''
+        pass
     
-    @abc.abstractclassmethod
+    @abc.abstractmethod
     def to_string(self) -> str:
         pass
     
-    @abc.abstractclassmethod
+    @abc.abstractmethod
     def to_list(self) -> list[any]:
         pass
 
-    @abc.abstractstaticmethod
+    @abc.abstractclassmethod
     def get_headers() -> list[str]:
         pass
     
-    @abc.abstractstaticmethod
+    @abc.abstractclassmethod
     def get_types() -> list[type]:
         pass
 
     def to_dict(self) -> dict[str,any]:
         return dict(zip(self.get_headers(), self.to_list()))
 
+    @classmethod
+    def get_dependencies(self) -> dict[str, int]:
+        '''Returns a list of class names required to build this class'''
+        _dependency_list = dict
+        for i,_header in self.get_headers():
+            _split = _header.split("_")
+            if len(_split) != 2:
+                continue
+            if _split[1].lower() != "id":
+                continue
+            _dependency_list.append(_split[0])
+        return _dependency_list
 
     def is_valid(self):
+        '''Returns False if any parameters have not been set'''
         _dict = self.to_dict()
         for _value in _dict.values():
             if _value is None:
@@ -52,6 +67,8 @@ class UniqueData(abc.ABC):
         return True
     
     def __eq__(self, __value: object) -> bool:
+        '''Ensures the equal opperator functions based on class content'''
+
         if not isinstance(__value, type(self)):
             return False
         

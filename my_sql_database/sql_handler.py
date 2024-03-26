@@ -86,7 +86,6 @@ class SQLHandler:
 
     def search(self, class_type: UniqueData | type,*, search_term: str = ""):
         _query = QueryGenerator().generate_search_query(class_type, search_term = search_term)
-        print(_query)
         return self.execute_fetch_querty(_query)
         
     def update_item(self, unique_data: UniqueData):
