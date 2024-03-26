@@ -91,6 +91,18 @@ class SQLHandler:
     def update_item(self, unique_data: UniqueData):
         _query = QueryGenerator.generate_update_query(unique_data)
         self.execute_querty(_query)
+        
+    def add_item(self, unique_data: UniqueData):
+        _query = QueryGenerator.generate_insert_query(unique_data)
+        print(_query)
+        self.execute_querty(_query)
+
+
+
+
+
+
+
 
     def execute_many_querty(self, _query: str, _unique_data_list: list[UniqueData]) -> bool:
         try:

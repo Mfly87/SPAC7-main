@@ -14,7 +14,7 @@ class Transaction(UniqueData):
     _quantity: int = None
     _transaction_type: str = None
     
-    def __init__(self, id: str, product_id: str, date: str | datetime, quantity: int, transaction_type: str, *args) -> None:
+    def __init__(self, id: str, product_id: str, date: str | datetime, quantity: int, transaction_type: str, clss: str = None) -> None:
         super().__init__(id)
         
         self.product_id = product_id

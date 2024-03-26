@@ -1,18 +1,17 @@
-from .abs_user_action import AbsUserAction
-from dataClasses.absDataTypes import UniqueNamedData
-from my_sql_database import SearchQuerySpecifier
+from .abs_user_search_action import AbsUserSearchAction
+from dataClasses import UniqueData
 
 from userInterface.user_choice_selector import UserChoiceSelector
 
-class UserActioNSearchColumnValue(AbsUserAction):
+class UserActioNSearchColumnValue(AbsUserSearchAction):
 
     @property
     def name(self) -> str:
-        return "Search using column values"
+        return "Search using sql query builder"
     
     @property
     def sort_priority(self) -> int:
-        return 1
+        return 999
 
     def is_usable(self) -> bool:
         return self.uid.state == "search"
@@ -35,7 +34,7 @@ class UserActioNSearchColumnValue(AbsUserAction):
         _unique_data_list = self.uid.warehouse.search_all_tables_of_subclass(_class_type, _query_specifier)
         self.uid.prev_search_result = _unique_data_list
         
-        self.uid.print_search_report()
+        self._print_search_report()
 
     def get_search_accector(self, _class_type):
         _search_affector = ""
@@ -52,10 +51,12 @@ class UserActioNSearchColumnValue(AbsUserAction):
             _union = list(self.unions.keys())[_union_index]
             _search_affector += _union + " "
 
-    def get_field_search_affector(self, _class_type):
+    def get_field_search_affector(self, _class_type: UniqueData):
 
         print("Which field would you like to search?")
-        _field_name, _field_index =self._get_unique_data_field_choice(_class_type)
+        _field_list = _class_type.get_headers()
+        _field_index = UserChoiceSelector.get_user_choice_from_name_list(_field_list)
+        _field_name = _field_list[_field_index]
         
         _search_affector = _field_name + " "
 

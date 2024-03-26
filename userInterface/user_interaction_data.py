@@ -18,22 +18,3 @@ class UserInteractionData():
     def max_search_results(self) -> int:
         return 10
     
-
-    def print_search_report(self) -> None:
-        print("")
-        if not self.prev_search_result:
-            print("I'm sorry, nothing matched your search.")
-            return
-        else:
-            print("Found %i items" % len(self.prev_search_result))
-            print("")
-            _mini_list = self.prev_search_result[0:self.max_search_results]
-            for i, _unique_data in enumerate(_mini_list):
-                if 0 < i and i % 3 == 0:
-                    print("")
-                print(_unique_data.to_string())
-
-            _remaining = len(self.prev_search_result) - len(_mini_list)
-            if 0 < _remaining:
-                print("...")
-                print("and %i more items" % (_remaining))
