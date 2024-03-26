@@ -78,6 +78,9 @@ class WarhouseMySQL(AbsWarehouse):
     
     def update_item(self, unique_data: UniqueData) -> list[UniqueData]:
         self.mysql_handler.update_item(unique_data)
+
+    def add_item(self, unique_data: UniqueData) -> list[UniqueData]:
+        self.mysql_handler.add_item(unique_data)
     
 
 

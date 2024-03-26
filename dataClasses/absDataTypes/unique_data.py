@@ -46,10 +46,10 @@ class UniqueData(abc.ABC):
         return dict(zip(self.get_headers(), self.to_list()))
 
     @classmethod
-    def get_dependencies(self) -> dict[str, int]:
+    def get_dependencies(self) -> list[str]:
         '''Returns a list of class names required to build this class'''
-        _dependency_list = dict
-        for i,_header in self.get_headers():
+        _dependency_list = []
+        for _header in self.get_headers():
             _split = _header.split("_")
             if len(_split) != 2:
                 continue
