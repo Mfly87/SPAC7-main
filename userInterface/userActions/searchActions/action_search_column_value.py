@@ -1,10 +1,9 @@
-from .abs_user_action import AbsUserAction
+from .abs_user_search_action import AbsUserSearchAction
 from dataClasses import UniqueData
-from my_sql_database import SearchQuerySpecifier
 
 from userInterface.user_choice_selector import UserChoiceSelector
 
-class UserActioNSearchColumnValue(AbsUserAction):
+class UserActioNSearchColumnValue(AbsUserSearchAction):
 
     @property
     def name(self) -> str:
@@ -35,7 +34,7 @@ class UserActioNSearchColumnValue(AbsUserAction):
         _unique_data_list = self.uid.warehouse.search_all_tables_of_subclass(_class_type, _query_specifier)
         self.uid.prev_search_result = _unique_data_list
         
-        self.uid.print_search_report()
+        self._print_search_report()
 
     def get_search_accector(self, _class_type):
         _search_affector = ""

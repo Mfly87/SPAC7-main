@@ -1,4 +1,4 @@
-from .abs_user_action import AbsUserAction
+from ..abs_user_action import AbsUserAction
 from dataClasses.absDataTypes import UniqueData
 from my_sql_database import SearchQuerySpecifier
 
@@ -28,7 +28,7 @@ class AbsUserSearchAction(AbsUserAction):
             _unique_data_list = self.uid.warehouse.search_all_tables_of_subclass(table_subclass, _query_specifier)
             self.uid.prev_search_result = _unique_data_list
             
-            self.uid.print_search_report()
+            self._print_search_report()
 
             if not _unique_data_list:
                 _retry = "y" in input("Do you wish to try again (y/n)?: ").lower()
@@ -37,3 +37,22 @@ class AbsUserSearchAction(AbsUserAction):
                     continue
             break
                 
+
+    def _print_search_report(self) -> None:
+        print("")
+        if not self.uid.prev_search_result:
+            print("I'm sorry, nothing matched your search.")
+            return
+        else:
+            print("Found %i items" % len(self.uid.prev_search_result))
+            print("")
+            _mini_list = self.uid.prev_search_result[0:self.uid.max_search_results]
+            for i, _unique_data in enumerate(_mini_list):
+                if 0 < i and i % 3 == 0:
+                    print("")
+                print(_unique_data.to_string())
+
+            _remaining = len(self.uid.prev_search_result) - len(_mini_list)
+            if 0 < _remaining:
+                print("...")
+                print("and %i more items" % (_remaining))
